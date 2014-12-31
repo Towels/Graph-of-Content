@@ -4,15 +4,19 @@ import java.sql.Blob;
 import java.sql.Date;
 import java.util.List;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
 import com.towels.graphofcontent.util.FileType;
 
+@Entity
+@Table(name="File")
 public class File {
 	
 	@Id

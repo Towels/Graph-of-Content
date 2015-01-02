@@ -2,3 +2,8 @@
 /bower_components/
 /.tmp/
 /.sass-cache/
+.metadata/
+.classpath
+.project
+.settings/
+/target/

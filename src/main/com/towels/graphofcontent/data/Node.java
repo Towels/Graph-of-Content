@@ -36,6 +36,8 @@ public abstract class Node {
 	private Chapter topChapter;
 	@OneToMany(mappedBy="topSection")
 	private List<Section> subSections;
+	@ManyToOne
+	private Lecture lecture;
 	
 	public Long getID(){
 		return this.id;
@@ -152,5 +154,27 @@ public abstract class Node {
 			section.resetTopSection();
 			return true;
 		}
+	}
+	
+	public boolean setLecture(Lecture room){
+		if(this.lecture != null){
+			return this.lecture == room;
+		}
+		else{
+			this.lecture = room;
+			return true;
+		}
+	}
+	
+	public boolean unsetLecture(Lecture room){
+		if(this.lecture == null){
+			return true;
+		}
+		else if(this.lecture == room){
+			this.lecture = null;
+			room.removeNode(this);
+			return true;
+		}
+		else return false;
 	}
 }

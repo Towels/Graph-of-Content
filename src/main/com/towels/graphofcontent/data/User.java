@@ -34,11 +34,11 @@ public class User{
 	private Date passwordLastChanged;
 	private Date emailLastChanged;
 	@OneToMany(mappedBy="owner")
-	private List<Room> ownedRooms;
+	private List<Lecture> ownedRooms;
 	@OneToMany(mappedBy="owner")
 	private List<File> ownedFiles;
 	@ManyToMany(mappedBy="moderators")
-	private List<Room> moderatedRooms;
+	private List<Lecture> moderatedRooms;
 	
 	@Deprecated
 	//TODO remove, id gets set automatically
@@ -106,11 +106,11 @@ public class User{
 		return this.emailLastChanged;
 	}
 	
-	public List<Room> getOwnedRooms(){
+	public List<Lecture> getOwnedRooms(){
 		return this.ownedRooms;
 	}
 	
-	public boolean addOwnedRoom(Room room){
+	public boolean addOwnedRoom(Lecture room){
 		if(this.ownedRooms.contains(room)){
 			return false;
 		}
@@ -121,7 +121,7 @@ public class User{
 		}
 	}
 	
-	public boolean addModeratedRoom(Room room){
+	public boolean addModeratedRoom(Lecture room){
 		if(this.moderatedRooms.contains(room)){
 			return false;
 		}
@@ -132,7 +132,7 @@ public class User{
 		}
 	}
 	
-	public boolean removeModeratedRoom(Room room){
+	public boolean removeModeratedRoom(Lecture room){
 		if(!this.moderatedRooms.contains(room)){
 			return false;
 		}
@@ -143,7 +143,7 @@ public class User{
 		}
 	}
 	
-	public List<Room> getModeratedRooms(){
+	public List<Lecture> getModeratedRooms(){
 		return this.moderatedRooms;
 	}
 	

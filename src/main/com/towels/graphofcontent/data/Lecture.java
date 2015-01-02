@@ -7,14 +7,17 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="Room")
-public class Room {
+@Table(name="Lecture")
+public class Lecture {
 
-	public Room(String name, String university, String professor){
+	public Lecture(String name, String university, String professor){
 		if(!this.setName(name));
 		if(!this.setUniversity(university));
 		if(!this.setProfesor(professor));
@@ -31,8 +34,11 @@ public class Room {
 	private Date dateCreated;
 	private Date lastModified;
 	private int rights;
+	@ManyToMany(mappedBy="moderatedRooms")
 	private List<User> moderators;
+	@ManyToOne
 	private User owner;
+	@OneToMany(mappedBy="room")
 	private List<Node> nodes;
 	
 	@Deprecated
@@ -135,5 +141,35 @@ public class Room {
 			owner.addOwnedRoom(this);
 			return true;
 		}
+	}
+	
+	public boolean addNode(Node node){
+		if(this.nodes.contains(node)){
+			return false;
+		}
+		if(!node.setLecture(this)){
+			return false;
+		}
+		else{
+			this.nodes.add(node);
+			return true;
+		}
+	}
+	
+	public boolean removeNode(Node node){
+		if(!this.nodes.contains(node)){
+			return false;
+		}
+		if(!node.unsetLecture(this)){
+			return false;
+		}
+		else{
+			this.nodes.remove(node);
+			return true;
+		}
+	}
+	
+	public List<Node> getGraph(){
+		return this.nodes;
 	}
 }

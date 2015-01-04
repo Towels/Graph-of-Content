@@ -8,7 +8,7 @@ var colorChapter = '#58D3F7', //bright blue
     colorText = '#151515'; //dark grey
 
 function drawEllipse(context, color, posX, posY, size, scaleX, scaleY) {
-    context.fillStyle = color || settings('defaultNodeColor');
+    context.fillStyle = color;
     context.beginPath();
     context.save();
     // scale context horizontally

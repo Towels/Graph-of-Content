@@ -2,10 +2,10 @@
  * Created by Sven on 28.12.2014.
  */
 
-var colorChapter = '#58D3F7'; //bright blue
-    colorTopic = '#0000FF'; //dark blue
-    colorComment ='#FF4000'; //orange
-    colorText = '#151515'; // dark grey
+var colorChapter = '#58D3F7', //bright blue
+    colorTopic = '#0000FF', //dark blue
+    colorComment ='#FF4000', //orange
+    colorText = '#151515'; //dark grey
 
 function drawEllipse(context, color, posX, posY, size, scaleX, scaleY) {
     context.fillStyle = color || settings('defaultNodeColor');
@@ -52,7 +52,7 @@ sigma.parsers.json('lecture.json', {
 sigma.canvas.nodes.chapter = function(node, context, settings) {
     var prefix = settings('prefix') || '',
         size = node[prefix + 'size']*2,
-        label = node['label'],
+        label = node.label,
         scaleX = 3,
         scaleY = 1,
         posX = (node[prefix+'x'])/scaleX,
@@ -62,19 +62,15 @@ sigma.canvas.nodes.chapter = function(node, context, settings) {
         fontSize = size/1.5;
 
     drawEllipse(context,colorChapter,posX,posY,size,scaleX,scaleY);
-
-
     drawFont(context, fontSize, label, posX2, posY2);
 
 };
 
 //node topic renderer
-
-
 sigma.canvas.nodes.topic = function(node, context, settings) {
     var prefix = settings('prefix') || '',
         size = node[prefix + 'size']*1,
-        label = node['label'],
+        label = node.label,
         scaleX = 3,
         scaleY = 1,
         posX = (node[prefix+'x'])/scaleX,
@@ -83,36 +79,23 @@ sigma.canvas.nodes.topic = function(node, context, settings) {
         posY2 = (node[prefix+'y']),
         fontSize = size/1.5;
 
-
-
-    drawEllipse(context,colorTopic,posX,posY,size,scaleX,scaleY)
+    drawEllipse(context,colorTopic,posX,posY,size,scaleX,scaleY);
     drawFont(context, fontSize, label, posX2, posY2);
 
-
-
-}
+};
 
 sigma.canvas.nodes.comment = function(node, context, settings) {
     var prefix = settings('prefix') || '',
         size = node[prefix + 'size'],
-        label = node['label'],
+        label = node.label,
         posX = (node[prefix+'x'])-size,
         posY = (node[prefix+'y']);
 
-
     context.fillStyle = colorComment;
     context.beginPath();
-
     context.moveTo(posX,posY);
-
     context.lineTo(posX+size,posY-size);
-
     context.lineTo(posX+2*size,posY);
-
     context.closePath();
-
     context.fill();
-}
-
-
-
+};

@@ -38,7 +38,7 @@ app.controller('personsListController', function ($scope, $rootScope, personServ
 
         personService.get(listPersonsArgs, function (data) {
             $scope.persons = data;
-        })
+        });
     };
 
     // Broadcast an event when an element in the grid is deleted. No real deletion is perfomed at this point.

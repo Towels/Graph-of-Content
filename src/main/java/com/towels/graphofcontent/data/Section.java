@@ -10,11 +10,6 @@ import javax.persistence.ManyToOne;
 @Entity
 @DiscriminatorValue("SECTION")
 public class Section extends Node{
-
-	public Section(String title, File file) {
-		super(title, file);
-		// TODO Auto-generated constructor stub
-	}
 	
 	@ManyToOne
 	private Section topSection;

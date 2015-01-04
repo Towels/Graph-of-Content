@@ -17,13 +17,6 @@ import javax.persistence.Table;
 @Table(name="Lecture")
 public class Lecture {
 
-	public Lecture(String name, String university, String professor){
-		if(!this.setName(name));
-		if(!this.setUniversity(university));
-		if(!this.setProfesor(professor));
-		this.dateCreated = new Date(System.currentTimeMillis());
-	}
-	
 	@Id
     @SequenceGenerator(name = "id", sequenceName = "id")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id")
@@ -34,11 +27,11 @@ public class Lecture {
 	private Date dateCreated;
 	private Date lastModified;
 	private int rights;
-	@ManyToMany(mappedBy="moderatedRooms")
+	@ManyToMany
 	private List<User> moderators;
 	@ManyToOne
 	private User owner;
-	@OneToMany(mappedBy="room")
+	@OneToMany(mappedBy="lecture")
 	private List<Node> nodes;
 	
 	@Deprecated

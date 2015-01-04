@@ -19,11 +19,6 @@ import javax.persistence.Table;
 @DiscriminatorColumn(name="NODE_TYPE")
 public abstract class Node {
 
-	//TODO throw some errors if checks fail
-	public Node(String title, File file){
-		if(!this.setTitle(title));
-		if(!this.addFile(file));
-	}
 	@Id
     @SequenceGenerator(name = "id", sequenceName = "id")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id")

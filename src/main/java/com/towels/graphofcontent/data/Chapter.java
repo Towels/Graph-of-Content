@@ -11,11 +11,6 @@ import javax.persistence.OneToMany;
 @DiscriminatorValue("CHAPTER")
 public class Chapter extends Node{
 
-	public Chapter(String title, File file) {
-		super(title, file);
-		// TODO Auto-generated constructor stub
-	}
-
 	@OneToMany(mappedBy="topChapter")
 	private List<Chapter> subChapters;
 	

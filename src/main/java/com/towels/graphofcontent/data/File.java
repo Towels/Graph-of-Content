@@ -34,14 +34,6 @@ public class File {
 	@OneToMany(mappedBy="file")
 	private List<Node> usedNodes;
 	
-	public File(String title, String description, Blob file, FileType fileType){
-		if(!this.setTitle(title));
-		if(!this.setDescription(description));
-		if(!this.setFile(file));
-		this.setFileType(fileType);
-		this.dateCreated = new Date(System.currentTimeMillis());
-	}
-	
 	@Deprecated
 	public void setID(Long id){
 		this.id = id;

@@ -15,13 +15,6 @@ import javax.persistence.Table;
 @Entity
 @Table(name="User")
 public class User{
-	//TODO throw exception when atleast one of the method calls return error
-	public User(String name, String email, String password){
-		if(!this.setName(name));
-		if(!this.setEmail(email));
-		if(!this.setPassword(password));
-		this.dateCreated = new Date(System.currentTimeMillis());
-	}
 	
 	@Id
     @SequenceGenerator(name = "id", sequenceName = "id")

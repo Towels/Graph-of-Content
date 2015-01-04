@@ -17,8 +17,8 @@ module.exports = function (grunt) {
 
   // Configurable paths for the application
   var appConfig = {
-    app: 'src/main/webapp',
-    dist: 'target/angular'
+    app: 'app',
+    dist: 'src/main/webapp'
   };
 
   // Define the configuration for all the tasks

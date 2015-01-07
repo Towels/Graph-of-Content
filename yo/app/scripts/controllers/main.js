@@ -8,10 +8,7 @@
  * Controller of the graphOfContentApp
  */
 angular.module('graphOfContentApp')
-  .controller('MainCtrl', function ($scope) {
-    $scope.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
+  .controller('MainCtrl', function ($scope, site) {
+    $scope.site = site;
+   	$scope.site.updateSite('Welcome', 'Welcome to the Graph of Content.');
   });

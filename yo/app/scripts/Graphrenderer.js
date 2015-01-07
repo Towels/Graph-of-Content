@@ -8,6 +8,7 @@ var colorChapter = '#58D3F7', //bright blue
     colorText = '#151515'; //dark grey
 
 function drawEllipse(context, color, posX, posY, size, scaleX, scaleY) {
+    'use strict';
     context.fillStyle = color;
     context.beginPath();
     context.save();
@@ -27,9 +28,10 @@ function drawEllipse(context, color, posX, posY, size, scaleX, scaleY) {
 }
 
 function drawFont(context, size, label, posX, posY) {
+    'use strict';
     context.beginPath();
     context.fillStyle = colorText;
-    context.font = "bold " + size +"px Arial";
+    context.font = 'bold ' + size +'px Arial';
     context.fillText(label, posX, posY);
 
     context.closePath();
@@ -50,6 +52,7 @@ sigma.parsers.json('lecture.json', {
 
 //node chapter renderer
 sigma.canvas.nodes.chapter = function(node, context, settings) {
+    'use strict';
     var prefix = settings('prefix') || '',
         size = node[prefix + 'size']*2,
         label = node.label,
@@ -68,6 +71,7 @@ sigma.canvas.nodes.chapter = function(node, context, settings) {
 
 //node topic renderer
 sigma.canvas.nodes.topic = function(node, context, settings) {
+    'use strict';
     var prefix = settings('prefix') || '',
         size = node[prefix + 'size']*1,
         label = node.label,
@@ -85,9 +89,10 @@ sigma.canvas.nodes.topic = function(node, context, settings) {
 };
 
 sigma.canvas.nodes.comment = function(node, context, settings) {
+    'use strict';
     var prefix = settings('prefix') || '',
         size = node[prefix + 'size'],
-        label = node.label,
+        //label = node.label,
         posX = (node[prefix+'x'])-size,
         posY = (node[prefix+'y']);
 

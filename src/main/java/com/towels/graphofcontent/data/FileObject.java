@@ -7,6 +7,8 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -17,8 +19,8 @@ import javax.persistence.Table;
 import com.towels.graphofcontent.util.FileType;
 
 @Entity
-@Table(name="File")
-public class File {
+@Table(name="FileObject")
+public class FileObject {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,12 +36,11 @@ public class File {
 	@Column(name="dateLastModified")
 	private Date dateLastModified;
 	@Column(name="fileType")
+	@Enumerated(EnumType.STRING)
 	private FileType fileType;
 	
 	@ManyToOne
 	private User owner;
-	@OneToMany(mappedBy="file")
-	private Set<Node> usedNodes;
 	
 	public void setId(Long id){
 		this.id = id;
@@ -110,14 +111,6 @@ public class File {
 	
 	public void setOwner(User owner){
 		this.owner = owner;
-	}
-
-	public Set<Node> getUsedNodes() {
-		return usedNodes;
-	}
-
-	public void setUsedNodes(Set<Node> usedNodes) {
-		this.usedNodes = usedNodes;
 	}
 	
 	

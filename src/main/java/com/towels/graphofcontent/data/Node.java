@@ -26,7 +26,7 @@ public class Node {
 	private String title;
 
 	@ManyToOne
-	private File file;
+	private FileObject file;
 	@ManyToOne
 	private Lecture lecture;
 	
@@ -49,12 +49,12 @@ public class Node {
 		this.title = title;
 	}
 
-	public File getFile() {
+	public FileObject getFile() {
 		return this.file;
 	}
 
 	// TODO possibly add file size constraints
-	public void setFile(File file) {
+	public void setFile(FileObject file) {
 		this.file = file;
 	}
 

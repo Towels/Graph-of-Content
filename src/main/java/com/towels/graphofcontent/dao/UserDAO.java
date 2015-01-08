@@ -12,7 +12,7 @@ public class UserDAO {
 	private EntityManager em;
 	
 	//Create new User
-	public void storeLabUser(User user) {
+	public void store(User user) {
 		em.persist(user);
 	}
 	
@@ -22,16 +22,25 @@ public class UserDAO {
 	}
 	
 	//Delete user
-	public void deleteLabUser(User user) {
+	public void delete(User user) {
 		em.remove(user);
 	}
 	
 	//User Defined Query
-	public User findLabUserByEmail(String email) {
+	public User findUserByEmail(String email) {
 		return (User) em
 				.createQuery(
 						"SELECT user FROM User user WHERE user.email = :email")
 				.setParameter("email", email)
+				.getSingleResult();
+	}
+	
+	//User Defined Query
+	public User findUserById(Long id) {
+		return (User) em
+				.createQuery(
+						"SELECT user FROM User user WHERE user.id = :id")
+				.setParameter("id", id)
 				.getSingleResult();
 	}
 }

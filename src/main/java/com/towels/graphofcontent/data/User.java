@@ -12,9 +12,11 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name="User")
+@Table(name="User", 
+		uniqueConstraints=@UniqueConstraint(columnNames={"email"}))
 public class User {
 
 	@Id
@@ -36,7 +38,7 @@ public class User {
 	@OneToMany(mappedBy = "owner", fetch = FetchType.LAZY)
 	private Set<Lecture> ownedRooms;
 	@OneToMany(mappedBy = "owner", fetch = FetchType.LAZY)
-	private Set<File> ownedFiles;
+	private Set<FileObject> ownedFiles;
 	@ManyToMany(mappedBy = "moderators", fetch = FetchType.LAZY)
 	private Set<Lecture> moderatedRooms;
 
@@ -134,11 +136,11 @@ public class User {
 		this.moderatedRooms = set;
 	}
 
-	public Set<File> getOwnedFiles() {
+	public Set<FileObject> getOwnedFiles() {
 		return this.ownedFiles;
 	}
 
-	public void setOwnedFiles(Set<File> set) {
+	public void setOwnedFiles(Set<FileObject> set) {
 		this.ownedFiles = set;
 	}
 

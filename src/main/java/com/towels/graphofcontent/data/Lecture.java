@@ -1,16 +1,19 @@
 package com.towels.graphofcontent.data;
 
 import java.sql.Date;
-import java.util.List;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -18,31 +21,41 @@ import javax.persistence.Table;
 public class Lecture {
 
 	@Id
-    @SequenceGenerator(name = "id", sequenceName = "id")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	@Column(name="name")
 	private String name;
+	@Column(name="university")
 	private String university;
+	@Column(name="professor")
 	private String professor;
+	@Column(name="dateCreated")
 	private Date dateCreated;
+	@Column(name="lastModified")
 	private Date lastModified;
+	@Column(name="rights")
 	private int rights;
-	@ManyToMany
-	private List<User> moderators;
-	@ManyToOne
-	private User owner;
-	@OneToMany(mappedBy="lecture")
-	private List<Node> nodes;
 	
-	@Deprecated
-	//TODO remove: unneeded and unused?
-	public void setID(Long id){
+	@ManyToMany(fetch=FetchType.LAZY)
+	private Set<User> moderators;
+	@ManyToOne(fetch=FetchType.LAZY)
+	private User owner;
+	
+	@OneToOne(fetch=FetchType.EAGER,cascade=CascadeType.ALL)
+	private GraphOfContent graph;
+	
+	public Long getId(){
+		return this.id;
+	}
+
+	public void setId(Long id){
 		this.id = id;
 	}
 	
-	public Long getID(){
-		return this.id;
+	public String getName(){
+		return this.name;
 	}
+	
 	//TODO regex for invalid chars
 	public boolean setName(String name){
 		if(true){
@@ -53,10 +66,10 @@ public class Lecture {
 		else return false;
 	}
 		
-	public String getName(){
-		return this.name;
+	public String getUniversity(){
+		return this.university;
 	}
-	
+	//TODO check name if valid
 	public boolean setUniversity(String university){
 		if(true){
 			this.university = university;
@@ -66,11 +79,11 @@ public class Lecture {
 		else return false;
 	}
 	
-	public String getUniversity(){
-		return this.university;
+	public String getProfessor() {
+		return professor;
 	}
-	
-	public boolean setProfesor(String professor){
+	//TODO check name if valid
+	public boolean setProfessor(String professor){
 		if(true){
 			this.professor = professor;
 			this.lastModified = new Date(System.currentTimeMillis());
@@ -83,42 +96,32 @@ public class Lecture {
 		return this.dateCreated;
 	}
 	
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = dateCreated;
+	}
+	
 	public Date getLastModified(){
 		return this.lastModified;
 	}
-	
-	public void setRights(int rights){
-		this.rights = rights;
+
+	public void setLastModified(Date lastModified) {
+		this.lastModified = lastModified;
 	}
 	
 	public int getRights(){
 		return this.rights;
 	}
 	
-	public List<User> getModerators(){
+	public void setRights(int rights){
+		this.rights = rights;
+	}
+	
+	public Set<User> getModerators(){
 		return this.moderators;
 	}
 	
-	public boolean addModerator(User moderator){
-		if(this.moderators.contains(moderator)){
-			return false;
-		}
-		else{
-			this.moderators.add(moderator);
-			moderator.addModeratedRoom(this);
-			return false;
-		}
-	}
-	
-	public boolean removeModerator(User moderator){
-		if(!this.moderators.contains(moderator)){
-			return false;
-		}
-		else{
-			this.moderators.remove(moderator);
-			moderator.removeModeratedRoom(this);
-			return true;
-		}
+	public void setModerators(Set<User> moderators) {
+		this.moderators = moderators;
 	}
 	
 	public User getOwner(){
@@ -131,38 +134,17 @@ public class Lecture {
 		}
 		else{
 			this.owner = owner;
-			owner.addOwnedRoom(this);
 			return true;
 		}
 	}
-	
-	public boolean addNode(Node node){
-		if(this.nodes.contains(node)){
-			return false;
-		}
-		if(!node.setLecture(this)){
-			return false;
-		}
-		else{
-			this.nodes.add(node);
-			return true;
-		}
+
+	public GraphOfContent getGraph() {
+		return graph;
+	}
+
+	public void setGraph(GraphOfContent graph) {
+		this.graph = graph;
 	}
 	
-	public boolean removeNode(Node node){
-		if(!this.nodes.contains(node)){
-			return false;
-		}
-		if(!node.unsetLecture(this)){
-			return false;
-		}
-		else{
-			this.nodes.remove(node);
-			return true;
-		}
-	}
-	
-	public List<Node> getGraph(){
-		return this.nodes;
-	}
+
 }

@@ -1,6 +1,13 @@
 {
   "name": "graphofcontent",
   "version": "0.0.0",
+  "authors": [
+        "Thibaud Kehler",
+        "Sven Schiller",
+        "Oliver Conzen", 
+        "Nourhan Abdelhalim"
+    ],
+  "description": "javaee7-angular dependencies for Grunt.",
   "dependencies": {},
   "devDependencies": {
     "grunt": "^0.4.1",

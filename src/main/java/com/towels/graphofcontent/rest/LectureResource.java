@@ -1,6 +1,7 @@
 package com.towels.graphofcontent.rest;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -43,8 +44,8 @@ public class LectureResource extends Application {
 	
 	@GET
 	@Path("{id}/graph")
-	public List<Node> getGraph(@PathParam("id") Long id) {
+	public Set<Node> getGraph(@PathParam("id") Long id) {
 		Lecture lecture = entityManager.find(Lecture.class, id);
-		return lecture.getGraph();
+		return lecture.getGraph().getVertices();
 	}
 }

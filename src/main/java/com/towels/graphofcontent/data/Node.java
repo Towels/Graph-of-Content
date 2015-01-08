@@ -2,6 +2,7 @@ package com.towels.graphofcontent.data;
 
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,166 +11,91 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import com.towels.graphofcontent.util.NodeType;
 
 @Entity
 @Table(name="Node")
-@Inheritance
-@DiscriminatorColumn(name="NODE_TYPE")
-public abstract class Node {
+public class Node {
 
 	@Id
-    @SequenceGenerator(name = "id", sequenceName = "id")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	@Column(name = "title")
 	private String title;
+
 	@ManyToOne
 	private File file;
-	
-	@ManyToOne
-	private Chapter topChapter;
-	@OneToMany(mappedBy="topSection")
-	private List<Section> subSections;
 	@ManyToOne
 	private Lecture lecture;
 	
-	public Long getID(){
-		return this.id;
-	}
+	@Column(name="nodetype")
+	private NodeType nodetype;
 	
-	public boolean setTitle(String title){
-		if(true){
-			this.title = title;
-			return true;
-		}
-		else return false;
+	public Long getId() {
+		return id;
 	}
-	
-	public String getTitle(){
-		return this.title;
+
+	public void setId(Long id) {
+		this.id = id;
 	}
-	
-	public File getFile(){
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public File getFile() {
 		return this.file;
 	}
+
+	// TODO possibly add file size constraints
+	public void setFile(File file) {
+		this.file = file;
+	}
+
+	public void setLecture(Lecture room) {
+		this.lecture = room;
+	}
+
+	public Lecture getLecture() {
+		return this.lecture;
+	}
 	
-	//TODO possibly add file size constraints
-	public boolean addFile(File file){
-		if(file == null){
-			if(this.file == null){
+	/**
+	 * Special implementation of the equals method due to some issues with lazy
+	 * fetching and creation of entities. See http://burtbeckwith.com/blog/?p=53
+	 * for more details. {@inheritDoc}
+	 **/
+	@Override
+	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		}
+		if (object instanceof Node) {
+			if (this.getId() != 0 && ((Node) object).getId() != 0
+					&& this.getId() == ((Node) object).getId()) {
 				return true;
-			}
-			else{
+			} else {
 				return false;
 			}
-		}
-		else{
-			if(this.file != null){
-				return false;
-			}
-			else{
-				this.file = file;
-				file.addUsedNode(this);
-				return true;
-			}
-		}
-	}
-	
-	public boolean removeFile(){
-		if(this.file == null){
+		} else {
 			return false;
 		}
-		else{
-			this.file.removeUsedNode(this);
-			this.file = null;
-			return true;
-		}
 	}
-	
-	public boolean replaceFile(File file){
-		boolean success = this.removeFile();
-		if(success){
-			success = this.addFile(file);
-		}
-		return success;
-	}
-	
-	public boolean hasTopChapter(){
-		return this.topChapter != null ;
-	}
-	
-	public boolean setTopChapter(Chapter chapter){
-		if(this.topChapter != null){
-			return topChapter == chapter;
-		}
-		else{
-			this.topChapter = chapter;
-			return true;
-		}
-	}
-	
-	public boolean resetTopChapter(){
-		if (this.topChapter == null){
-			return false;
-		}
-		else{
-			this.topChapter = null;
-			return true;
-		}
-	}
-	
-	public List<Section> getSubSections(){
-		return this.subSections;
-	}
-	
-	public boolean addSubSection(Section section){
-		if(this.subSections.contains(section)){
-			return false;
-		}
-		if(section.hasTopSection()){
-			return false;
-		}
-		else{
-			this.subSections.add(section);
-			section.setTopSection(null);
-			return true;
-		}
-	}
-	
-	public boolean removeSubSection(Section section){
-		if(!this.subSections.contains(section)){
-			return false;
-		}
-		if(!section.hasTopSection()){
-			return false;
-		}
-		else{
-			this.subSections.remove(section);
-			section.resetTopSection();
-			return true;
-		}
-	}
-	
-	public boolean setLecture(Lecture room){
-		if(this.lecture != null){
-			return this.lecture == room;
-		}
-		else{
-			this.lecture = room;
-			return true;
-		}
-	}
-	
-	public boolean unsetLecture(Lecture room){
-		if(this.lecture == null){
-			return true;
-		}
-		else if(this.lecture == room){
-			this.lecture = null;
-			room.removeNode(this);
-			return true;
-		}
-		else return false;
+
+	/**
+	 * Special implementation of the hash code method due to some issues with
+	 * lazy fetching and creation of entities. See
+	 * http://burtbeckwith.com/blog/?p=53 for more details. {@inheritDoc}
+	 **/
+	@Override
+	public int hashCode() {
+		int hash = this.getId().hashCode();
+		return hash;
 	}
 }

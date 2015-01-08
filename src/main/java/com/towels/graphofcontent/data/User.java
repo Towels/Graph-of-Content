@@ -1,157 +1,186 @@
 package com.towels.graphofcontent.data;
 
 import java.sql.Date;
-import java.util.List;
+import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="User")
-public class User{
-	
+public class User {
+
 	@Id
-    @SequenceGenerator(name = "id", sequenceName = "id")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	@Column(name = "name")
 	private String name;
+	@Column(name = "email")
 	private String email;
+	@Column(name = "password")
 	private String password;
+	@Column(name = "dateCreated")
 	private Date dateCreated;
+	@Column(name = "passwordLastChanged")
 	private Date passwordLastChanged;
+	@Column(name = "emailLastChanged")
 	private Date emailLastChanged;
-	@OneToMany(mappedBy="owner")
-	private List<Lecture> ownedRooms;
-	@OneToMany(mappedBy="owner")
-	private List<File> ownedFiles;
-	@ManyToMany(mappedBy="moderators")
-	private List<Lecture> moderatedRooms;
-	
-	@Deprecated
-	//TODO remove, id gets set automatically
-	public void setID(Long id){
-		this.id = id;
-	}
-	public Long getID(){
+
+	@OneToMany(mappedBy = "owner", fetch = FetchType.LAZY)
+	private Set<Lecture> ownedRooms;
+	@OneToMany(mappedBy = "owner", fetch = FetchType.LAZY)
+	private Set<File> ownedFiles;
+	@ManyToMany(mappedBy = "moderators", fetch = FetchType.LAZY)
+	private Set<Lecture> moderatedRooms;
+
+	public Long getId() {
 		return this.id;
 	}
-	
-	//TODO regex name for invalid chars
-	//TODO remove Deprecated, make private
-	@Deprecated
-	public boolean setName(String name){
-		if(true){
-			this.name = name;
-			return true;
-		}
-		else return false;
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 	
-	public String getName(){
+	public String getName() {
 		return this.name;
 	}
+	//TODO Check name if valid
+	public boolean setName(String name) {
+		if (true) {
+			this.name = name;
+			return true;
+		} else {
+			return false;
+		}
+	}	
 	
-	//TODO check email with regex, return false and do nothing if not a valid email
-	//TODO maybe use int for more error codes?
-	public boolean setEmail(String email){
-		if(true){
+	public String getEmail() {
+		return email;
+	}
+
+	// TODO check email with regex, return false and do nothing if not a valid
+	// email
+	public boolean setEmail(String email) {
+		if (true) {
 			this.email = email;
 			this.emailLastChanged = new Date(System.currentTimeMillis());
 			return true;
-		}
-		else return false;
+		} else
+			return false;
 	}
-	
-	public String getEmail(){
-		return email;
-	}
-	
-	//TODO check password with regex, return false and do nothing if not a valid password
-	//TODO maybe use int for more error codes?
-	public boolean setPassword(String password){
-		if(true){
-			this.password = password;
-			this.passwordLastChanged = new Date(System.currentTimeMillis());
-			return true;
-		}
-		else return false;
-	}
-	
-	@Deprecated
-	//this may not be a secure way of doing this, maybe necessary for the server auth module
-	public String getPassword(){
+
+	// this may not be a secure way of doing this, maybe necessary for the
+	// server auth module
+	public String getPassword() {
 		return this.password;
 	}
 	
-	public Date getDateCreated(){
+	// TODO check password with regex, return false and do nothing if not a
+	// valid password
+	// TODO maybe use int for more error codes?
+	public boolean setPassword(String password) {
+		if (true) {
+			this.password = password;
+			this.passwordLastChanged = new Date(System.currentTimeMillis());
+			return true;
+		} else
+			return false;
+	}
+
+	public Date getDateCreated() {
 		return this.dateCreated;
 	}
-	public Date getPasswordLastChanged(){
+	
+	public void setDateCreated(Date newDate) {
+		this.dateCreated = newDate;
+	}
+
+	public Date getPasswordLastChanged() {
 		return this.passwordLastChanged;
 	}
-	public Date getEmailLastChanged(){
+	
+	public void setPasswordLastChanged(Date newDate) {
+		this.passwordLastChanged = newDate;
+	}
+
+	public Date getEmailLastChanged() {
 		return this.emailLastChanged;
 	}
-	
-	public List<Lecture> getOwnedRooms(){
+
+	public void setEmailLastChanged(Date newDate) {
+		this.emailLastChanged = newDate;
+	}
+
+	public Set<Lecture> getOwnedRoomsList() {
 		return this.ownedRooms;
 	}
-	
-	public boolean addOwnedRoom(Lecture room){
-		if(this.ownedRooms.contains(room)){
-			return false;
-		}
-		else{
-			this.ownedRooms.add(room);
-			room.setOwner(this);
-			return true;
-		}
+
+	public void setOwnedRoomsList(Set<Lecture> set) {
+		this.ownedRooms = set;
 	}
-	
-	public boolean addModeratedRoom(Lecture room){
-		if(this.moderatedRooms.contains(room)){
-			return false;
-		}
-		else{
-			this.moderatedRooms.add(room);
-			room.addModerator(this);
-			return true;
-		}
-	}
-	
-	public boolean removeModeratedRoom(Lecture room){
-		if(!this.moderatedRooms.contains(room)){
-			return false;
-		}
-		else{
-			this.moderatedRooms.remove(room);
-			room.removeModerator(this);
-			return true;
-		}
-	}
-	
-	public List<Lecture> getModeratedRooms(){
+
+	public Set<Lecture> getModeratedRooms() {
 		return this.moderatedRooms;
 	}
-	
-	public List<File> getOwnedFiles(){
+
+	public void setModeratedRooms(Set<Lecture> set) {
+		this.moderatedRooms = set;
+	}
+
+	public Set<File> getOwnedFiles() {
 		return this.ownedFiles;
 	}
-	
-	public boolean addOwnedFile(File file){
-		if(this.ownedFiles.contains(file)){
-			return false;
-		}
-		else{
-			this.ownedFiles.add(file);
-			file.setOwner(this);
+
+	public void setOwnedFiles(Set<File> set) {
+		this.ownedFiles = set;
+	}
+
+	/**
+	 * Special implementation of the equals method due to some issues with lazy
+	 * fetching and creation of entities. See http://burtbeckwith.com/blog/?p=53
+	 * for more details. {@inheritDoc}
+	 **/
+	@Override
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
+		if (User.class.isInstance(object)) {
+			if (this.getId() != 0 && ((User) object).getId() != 0
+					&& this.getId() == ((User) object).getId()) {
+				return true;
+			} else {
+				return (
+
+				this.getEmail() != null && this.getEmail().equals(
+						((User) object).getEmail())
+
+				);
+			}
+		} else {
+			return false;
+		}
+	}
+
+	/**
+	 * Special implementation of the hash code method due to some issues with
+	 * lazy fetching and creation of entities. See
+	 * http://burtbeckwith.com/blog/?p=53 for more details. {@inheritDoc}
+	 **/
+	@Override
+	public int hashCode() {
+		int hash = 1;
+
+		hash = hash * 31
+				+ (this.getEmail() == null ? 0 : this.getEmail().hashCode());
+
+		return hash;
 	}
 }

@@ -3,14 +3,15 @@ package com.towels.graphofcontent.data;
 import java.sql.Blob;
 import java.sql.Date;
 import java.util.List;
+import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import com.towels.graphofcontent.util.FileType;
@@ -20,40 +21,44 @@ import com.towels.graphofcontent.util.FileType;
 public class File {
 	
 	@Id
-    @SequenceGenerator(name = "id", sequenceName = "id")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	@Column(name="title")
 	private String title;
+	@Column(name="description")
 	private String description;
+	@Column(name="file")
 	private Blob file;
+	@Column(name="dateCreated")
 	private Date dateCreated;
+	@Column(name="dateLastModified")
 	private Date dateLastModified;
+	@Column(name="fileType")
 	private FileType fileType;
+	
 	@ManyToOne
 	private User owner;
 	@OneToMany(mappedBy="file")
-	private List<Node> usedNodes;
+	private Set<Node> usedNodes;
 	
-	@Deprecated
-	public void setID(Long id){
+	public void setId(Long id){
 		this.id = id;
 	}
 	
-	public Long getID(){
+	public Long getId(){
 		return this.id;
-	}
-	
-	public boolean setTitle(String title){
-		if(true){
-			this.title = title;
-			this.dateLastModified = new Date(System.currentTimeMillis());
-			return true;
-		}
-		else return false;
 	}
 	
 	public String getTitle(){
 		return this.title;
+	}
+	
+	public void setTitle(String title){
+		this.title = title;
+	}
+	
+	public String getDescription(){
+		return this.description;
 	}
 	
 	public boolean setDescription(String description){
@@ -65,78 +70,55 @@ public class File {
 		else return false;
 	}
 	
-	public String getDescription(){
-		return this.description;
-	}
-	
-	@Deprecated
-	//TODO either mark private or remove
-	public boolean setFile(Blob file){
-		if(true){
-			this.file = file;
-			this.dateLastModified = new Date(System.currentTimeMillis());
-			return true;
-		}
-		else return false;
-	}
-	
 	public Blob getFile(){
 		return this.file;
 	}
+
+	public void setFile(Blob file){
+		this.file = file;
+	}
+	
+
 	
 	public Date getDateCreated(){
 		return this.dateCreated;
+	}
+	
+	public void setDateCreated(Date date) {
+		this.dateCreated = date;
 	}
 	
 	public Date getDateLastModified(){
 		return this.dateLastModified;
 	}
 	
-	@Deprecated
-	//TODO either mark private or remove
-	public void setFileType(FileType fileType){
-		this.fileType = fileType;
-		this.dateLastModified = new Date(System.currentTimeMillis());
+	public void setDateLastModified(Date date) {
+		this.dateLastModified = date;
 	}
 	
 	public FileType getFileType(){
 		return this.fileType;
 	}
 	
+	public void setFileType(FileType fileType){
+		this.fileType = fileType;
+	}
+	
 	public User getOwner(){
 		return this.owner;
 	}
 	
-	public boolean setOwner(User owner){
-		if(this.owner != null){
-			return false;
-		}
-		else {
-			this.owner = owner;
-			owner.addOwnedFile(this);
-			return true;
-		}
+	public void setOwner(User owner){
+		this.owner = owner;
+	}
+
+	public Set<Node> getUsedNodes() {
+		return usedNodes;
+	}
+
+	public void setUsedNodes(Set<Node> usedNodes) {
+		this.usedNodes = usedNodes;
 	}
 	
-	public boolean addUsedNode(Node node){
-		if(this.usedNodes.contains(node)){
-			return false;
-		}
-		else{
-			this.usedNodes.add(node);
-			node.addFile(this);
-			return true;
-		}
-	}
 	
-	public boolean removeUsedNode(Node node){
-		if(!this.usedNodes.contains(node)){
-			return false;
-		}
-		else{
-			this.usedNodes.remove(node);
-			node.removeFile();
-			return true;
-		}
-	}
 }

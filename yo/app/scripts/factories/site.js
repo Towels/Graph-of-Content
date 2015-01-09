@@ -20,4 +20,12 @@ angular.module('graphOfContentApp')
         $window.document.title = title;
     };
     return site;
+}) //TODO move this into own file
+.factory('api', function() {
+    return {
+        root: 'http://localhost:8080/resources',
+        user: '/user',
+        lecture: '/lecture',
+        file: '/file'
+    };
 });

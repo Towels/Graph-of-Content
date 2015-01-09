@@ -20,4 +20,32 @@ angular.module('graphOfContentApp')
   $scope.close = function() {
     $mdSidenav('left').close();
   };
+})
+.directive('resize', function ($window) {
+	return function (scope) {
+		var w = $window;
+		scope.getWindowDimensions = function () {
+			return { 'h': w.innerHeight};
+		};
+		scope.$watch(scope.getWindowDimensions, function (newValue) {
+			scope.windowHeight = newValue.h;
+			var viewPadding = 64 + ( 2 * 20 ); // toolbar height + 2* whiteframe padding 
+            var framePadding = viewPadding + ( 2 * 20 ); // additional 2* whiteframe padding
+
+            scope.viewStyle = function () {
+				return { 
+                    'height': (newValue.h - viewPadding) + 'px',
+                };
+			};
+			scope.frameStyle = function () {
+				return { 
+                    'height': (newValue.h - framePadding) + 'px',
+                };
+			};
+            
+		}, true);
+		angular.element($window).bind('resize', function () {
+			scope.$apply();
+		});
+	};
 });

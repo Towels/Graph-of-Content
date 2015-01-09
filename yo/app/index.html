@@ -38,21 +38,22 @@
           <md-button ng-href="#/file" class="md-primary">File</md-button>
           <md-button ng-href="#/lecture" class="md-primary">Lecture</md-button>
           <br>
-          <md-button ng-click="close()" hide-gt-md>Close Navigation</md-button>
+          <md-button ng-click="close()" hide-gt-md class="md-accent">Close Navigation</md-button>
         </section>
       </md-content>
     </md-sidenav>
-    <md-content flex>
-      <md-toolbar class="md-theme-indigo">
+    <md-content flex role="main">
+      <md-toolbar class="md-theme-indigo" ng-click="toggleLeft()">
         <h1 class="md-toolbar-tools">
-          <i class="fa fa-bars" ng-click="toggleLeft()" hide-gt-md></i>
+          <i class="fa fa-bars" hide-gt-md></i>
           <div ng-bind-html="site.title"></div>
         </h1>
       </md-toolbar>
-      <md-content class="md-padding">
-      <div ng-view=""></div>
+      <md-whiteframe class="md-whiteframe-z1 md-padding ng-scope md-default-theme" layout layout-align="start start" ng-style="viewStyle()" resize>
+      <md-content ng-view>
       </md-content>
     </md-content>
+    </md-whiteframe>
 </section>
 </div>
 

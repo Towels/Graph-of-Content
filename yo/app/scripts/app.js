@@ -17,7 +17,8 @@ angular
     'ngRoute',
     'ngSanitize',
     'ngTouch',
-    'ngMaterial'
+    'ngMaterial',
+    'angular-md5'
   ])
   .config(function ($routeProvider) {
     $routeProvider
@@ -25,7 +26,7 @@ angular
         templateUrl: 'views/main.html',
         controller: 'MainCtrl'
       })
-      .when('/user', {
+      .when('/user/:name', {
         templateUrl: 'views/user.html',
         controller: 'UserCtrl'
       })
@@ -38,6 +39,6 @@ angular
         controller: 'FileCtrl'
       })
       .otherwise({
-        redirectTo: '/'
+        redirectTo: '/404.html'
       });
   });

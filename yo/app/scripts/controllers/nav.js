@@ -20,12 +20,12 @@ angular.module('graphOfContentApp')
   $scope.close = function() {
     $mdSidenav('left').close();
   };
-})
+})//TODO move this into proper place
 .directive('resize', function ($window) {
 	return function (scope) {
 		var w = $window;
 		scope.getWindowDimensions = function () {
-			return { 'h': w.innerHeight};
+			return { h: w.innerHeight};
 		};
 		scope.$watch(scope.getWindowDimensions, function (newValue) {
 			scope.windowHeight = newValue.h;
@@ -34,12 +34,12 @@ angular.module('graphOfContentApp')
 
             scope.viewStyle = function () {
 				return { 
-                    'height': (newValue.h - viewPadding) + 'px',
+                    height: (newValue.h - viewPadding) + 'px'
                 };
 			};
 			scope.frameStyle = function () {
 				return { 
-                    'height': (newValue.h - framePadding) + 'px',
+                    height: (newValue.h - framePadding) + 'px'
                 };
 			};
             

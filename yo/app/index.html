@@ -49,11 +49,10 @@
           <div ng-bind-html="site.title"></div>
         </h1>
       </md-toolbar>
-      <md-whiteframe class="md-whiteframe-z1 md-padding ng-scope md-default-theme" layout layout-align="start start" ng-style="viewStyle()" resize>
-      <md-content ng-view>
-      </md-content>
-    </md-content>
+      <md-whiteframe class="md-whiteframe-z1 md-padding ng-scope md-default-theme" layout layout-align="center start" ng-style="viewStyle()" resize>
+      <md-content ng-style="frameStyle()" style="width: 80%;" ng-view> </md-content>
     </md-whiteframe>
+    </md-content>
 </section>
 </div>
 
@@ -100,6 +99,7 @@
     <script src="bower_components/angular-aria/angular-aria.js"></script>
     <script src="bower_components/hammerjs/hammer.js"></script>
     <script src="bower_components/angular-material/angular-material.js"></script>
+    <script src="bower_components/angular-md5/angular-md5.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 

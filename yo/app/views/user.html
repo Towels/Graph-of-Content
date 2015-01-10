@@ -1,2 +1,33 @@
-This is the profile page of {{user.name}}.
-The url for the user api is "{{api.root + api.user}}"
+<span ng-hide="exists()">The user you requested was not found. Try to check the name for spelling errors. </span>
+<md-content ng-show="exists()" layout="column" layout-align="space-around center">
+	<md-card class="profileCard" layout="row" layout-align="start center">
+		<img src="http://www.gravatar.com/avatar/{{ user.email | gravatar }}"/>
+		<div style="width: 10%;"></div>
+		<h1>{{user.name}}</h1>
+	</md-card>
+	<md-card class="profileCard" layout="row" layout-align="space-around start">
+		<div flex="40">Email Adress:</div> <div flex>{{user.email}}</div>
+	</md-card>
+	<md-card class="profileCard" layout="row" layout-align="space-around start">
+		<div flex="40">Date Joined:</div> <div flex>{{user.dateCreated | date : 'd. MMMM y, H:m'}}</div>
+	</md-card> 
+	<md-card class="profileCard">
+		{{user.name}}'s account is {{user.activeString()}}.
+	</md-card>
+</md-content>
+
+
+<!-- TODO: Test code, remove the following lines -->
+
+<form ng-submit="update()">
+	<md-text-float label="User Name" ng-model="username" placeholder="User Name"></md-text-float>
+	<md-text-float label="Email Adress" ng-model="email" placeholder="Email Adress"></md-text-float>
+	<md-button ng-click="update()">Submit</md-button>
+</form>
+<md-divider></md-divider>
+<p>
+	Image shows <a href="http://gravatar.com">gravatar</a> picture.<br/>
+	Username is invalid if empty.<br/>
+	<a ng-href="#/user/{{user.name}}">Go</a> to current users userpage (change url).
+</p>
+<md-divider></md-divider>

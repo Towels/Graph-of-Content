@@ -52,5 +52,7 @@ angular.module('graphOfContentApp')
 			$scope.user.name = $scope.username;
 		}
 	};
-
+	if($scope.loggedIn){
+		$scope.user.email = $scope.currentUser.email;
+	}
 });

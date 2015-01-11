@@ -11,18 +11,44 @@ angular.module('graphOfContentApp')
     	return someString;
     };
     var site = {
-        'title': '',
-        'desc': ''
+        title: '',
+        desc: ''
     };
     site.updateSite = function (title, desc) {
         site.title = fancy(title);
-        site.desc = desc;
+        site.desc = desc; //TODO unused
         $window.document.title = title;
     };
     return site;
-})
+})//TODO move into proper location
 .factory('auth', function(){
-    return null;
+    //replace with proper api calls and stuff
+    var auth = {};
+    auth.loggedIn = false;
+    auth.user = {
+        name: 'miladiir',
+        email: 'oliverconzen@me.com',
+        password: 'hujikolp'
+    };
+    auth.signUp = function(name, email, password){
+        auth.user = {
+            name: name,
+            email: email,
+            password: password
+        };
+        auth.loggedIn = true;
+    };
+    auth.logIn = function(name, password){
+        auth.loggedIn = true;
+        auth.user.name = name;
+        auth.user.password = password;
+        console.log('success');
+    };
+    auth.logOut = function(){
+        auth.loggedIn = false;
+        console.log('success');
+    };
+    return auth;
 })
 .constant('rootURL', 'http://localhost:8080/resources')
 .constant('userURL', 'http://localhost:8080/resources/user')

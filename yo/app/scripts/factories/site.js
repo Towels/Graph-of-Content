@@ -24,7 +24,7 @@ angular.module('graphOfContentApp')
 .factory('auth', function(){
     //replace with proper api calls and stuff
     var auth = {};
-    auth.loggedIn = false;
+    auth.loggedIn = true;
     auth.user = {
         name: 'miladiir',
         email: 'oliverconzen@me.com',
@@ -42,11 +42,9 @@ angular.module('graphOfContentApp')
         auth.loggedIn = true;
         auth.user.name = name;
         auth.user.password = password;
-        console.log('success');
     };
     auth.logOut = function(){
         auth.loggedIn = false;
-        console.log('success');
     };
     return auth;
 })

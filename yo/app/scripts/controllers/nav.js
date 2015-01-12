@@ -21,23 +21,22 @@ angular.module('graphOfContentApp')
   };
   $scope.logIn = function(name, password){
   	auth.logIn(name, password);
-  	console.log('logged in');
-  	console.log(auth.user);
-  console.log(auth.loggedIn);
   };
   $scope.logOut = function(){
   	auth.logOut();
-  	console.log('logged out');
-  	console.log(auth.user);
-  console.log(auth.loggedIn);
   };
   $scope.signUp = function(){
   	auth.signUp();
   };
   $scope.currentUser = auth.user;
   $scope.loggedIn = auth.loggedIn;
-  console.log(auth.user);
-  console.log(auth.loggedIn);
+
+  $scope.$watch(function(){
+  	return auth.loggedIn;
+  },
+  function(newValue){
+  	$scope.loggedIn = newValue;
+  });
 })//TODO move this into proper place
 .directive('resize', function ($window) {
 	return function (scope) {

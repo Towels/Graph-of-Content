@@ -1,3 +1,5 @@
+package com.towels.graphofcontent.dto;
+
 
 public class EdgeDTO {
 	public int id;

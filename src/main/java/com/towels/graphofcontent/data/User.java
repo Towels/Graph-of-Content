@@ -2,15 +2,19 @@ package com.towels.graphofcontent.data;
 
 import java.sql.Date;
 import java.util.Set;
+import java.util.UUID;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
@@ -34,6 +38,9 @@ public class User {
 	private Date passwordLastChanged;
 	@Column(name = "emailLastChanged")
 	private Date emailLastChanged;
+	
+	@OneToOne(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
+	private Token token;
 
 	@OneToMany(mappedBy = "owner", fetch = FetchType.LAZY)
 	private Set<Lecture> ownedRooms;
@@ -120,11 +127,19 @@ public class User {
 		this.emailLastChanged = newDate;
 	}
 
-	public Set<Lecture> getOwnedRoomsList() {
+	public Token getToken() {
+		return token;
+	}
+
+	public void setToken(Token token) {
+		this.token = token;
+	}
+
+	public Set<Lecture> getOwnedRooms() {
 		return this.ownedRooms;
 	}
 
-	public void setOwnedRoomsList(Set<Lecture> set) {
+	public void setOwnedRooms(Set<Lecture> set) {
 		this.ownedRooms = set;
 	}
 

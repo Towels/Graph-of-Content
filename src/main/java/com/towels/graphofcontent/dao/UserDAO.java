@@ -43,4 +43,22 @@ public class UserDAO {
 				.setParameter("id", id)
 				.getSingleResult();
 	}
+
+	public User findUserByEmailAndPassword(String email, String password) {
+		return (User) em
+				.createQuery(
+						"SELECT user FROM User user WHERE user.email = :email AND user.password = :password")
+				.setParameter("email", email)
+				.setParameter("password", password)
+				.getSingleResult();
+	}
+	
+	public User findUserByEmailAndToken(String email, String token) {
+		return (User) em
+				.createQuery(
+						"SELECT user FROM User user WHERE user.email = :email AND user.authToken = :token")
+				.setParameter("token", token)
+				.setParameter("email", email)
+				.getSingleResult();
+	}
 }

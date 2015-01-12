@@ -36,5 +36,4 @@ public class AuthAccessElementDTO implements Serializable {
 	public void setAuthToken(String authToken) {
 		this.authToken = authToken;
 	}
-    
 }

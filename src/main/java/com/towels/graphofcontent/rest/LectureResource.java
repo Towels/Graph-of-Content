@@ -22,15 +22,14 @@ import com.towels.graphofcontent.data.Node;
 @Stateless
 @ApplicationPath("/resources")
 @Path("lecture")
-@Consumes(MediaType.APPLICATION_JSON)
-@Produces(MediaType.APPLICATION_JSON)
+
 public class LectureResource extends Application {
 
 	@PersistenceContext
     private EntityManager entityManager;
 	
-	@SuppressWarnings("unchecked")
 	@GET
+	@Produces(MediaType.APPLICATION_JSON)
 	public List<Lecture> getLectures(){
 		Query query = entityManager.createQuery("SELECT e FROM Lecture e");
 		return (List<Lecture>) query.getResultList();
@@ -38,12 +37,14 @@ public class LectureResource extends Application {
 	
 	@GET
     @Path("{id}")
+	@Produces(MediaType.APPLICATION_JSON)
     public Lecture getLecture(@PathParam("id") Long id) {
         return entityManager.find(Lecture.class, id);
     }
 	
 	@GET
 	@Path("{id}/graph")
+	@Produces(MediaType.APPLICATION_JSON)
 	public Set<Node> getGraph(@PathParam("id") Long id) {
 		Lecture lecture = entityManager.find(Lecture.class, id);
 		return lecture.getGraph().getVertices();

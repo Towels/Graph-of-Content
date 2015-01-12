@@ -1,4 +1,4 @@
-package com.towels.graphofcontent.business;
+/*package com.towels.graphofcontent.business;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
@@ -6,9 +6,11 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.annotation.Priority;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.Priorities;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
 import javax.ws.rs.container.ResourceInfo;
@@ -19,16 +21,14 @@ import javax.ws.rs.ext.Provider;
 import com.towels.graphofcontent.dto.AuthAccessElementDTO;
 
 @Provider
-public class AuthSecurityInterceptor implements ContainerRequestFilter {
+@Priority(Priorities.AUTHENTICATION)
+public class AuthRequestFilter implements ContainerRequestFilter {
  
     // 401 - Access denied
     private static final Response ACCESS_UNAUTHORIZED = Response.status(Response.Status.UNAUTHORIZED).entity("Not authorized.").build();
  
     @EJB
     AuthServiceBean authService;
- 
-    @Context
-    private HttpServletRequest request;
  
     @Context
     private ResourceInfo resourceInfo;
@@ -51,4 +51,4 @@ public class AuthSecurityInterceptor implements ContainerRequestFilter {
             }
         }
     }
-}
+}*/

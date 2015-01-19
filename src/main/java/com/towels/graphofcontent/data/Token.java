@@ -14,7 +14,7 @@ import javax.persistence.Table;
 
 public class Token {
 	@Id
-	@Column(name="uuid", columnDefinition = "CHAR(32)", unique= true)
+	@Column(name="uuid", columnDefinition = "CHAR(36)", unique= true)
 	private String uuid;
 	
 	@Column(name="timestamp")
@@ -36,7 +36,7 @@ public class Token {
 		if(this.uuid == null){
 			UUID uuid = UUID.randomUUID();
 			this.uuid = uuid.toString();
-			this.timestamp = new Date(uuid.timestamp());
+			this.timestamp = new Date(System.currentTimeMillis());
 		}
 	}
 	

@@ -29,7 +29,7 @@ public class TokenDAO {
 		try{
 		return (Token) em
 				.createQuery(
-						"SELECT Token FROM Token token WHERE node.uuid = :id")
+						"SELECT Token FROM Token token WHERE token.uuid = :id")
 				.setParameter("id", id)
 				.getSingleResult();
 		} catch (NoResultException e) {

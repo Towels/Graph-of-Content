@@ -27,8 +27,6 @@ public class Node {
 
 	@ManyToOne
 	private FileObject file;
-	@ManyToOne
-	private Lecture lecture;
 	
 	@Column(name="nodetype")
 	private NodeType nodetype;
@@ -56,14 +54,6 @@ public class Node {
 	// TODO possibly add file size constraints
 	public void setFile(FileObject file) {
 		this.file = file;
-	}
-
-	public void setLecture(Lecture room) {
-		this.lecture = room;
-	}
-
-	public Lecture getLecture() {
-		return this.lecture;
 	}
 	
 	/**

@@ -1,16 +1,17 @@
-INSERT INTO User VALUES (1, CURTIME(), "test@mail.xyz", CURTIME(), "TestUser", "angular", CURTIME());	
+INSERT INTO Token VALUES ("a7a263c0c977407fa2eb7e728cafd264", NOW());
+
+INSERT INTO User VALUES (1, NOW(), "test@mail.xyz", NOW(), "TestUser", "angular", NOW(), "a7a263c0c977407fa2eb7e728cafd264");	
 
 INSERT INTO GraphOfContent VALUES (1);
-INSERT INTO Lecture VALUES (1, CURTIME(), CURTIME(), "TowelsRule", "Prof. Dr. Washcloth", 100, "Bathroom University", 1, 1);
+INSERT INTO Lecture VALUES (1, NOW(), NOW(), "TowelsRule", "Prof. Dr. Washcloth", 100, "Bathroom University", 1, 1);
 
+INSERT INTO FileObject VALUES (1, NOW(), NOW(), "File 1", NULL, "BIN", "F1", 1);
+INSERT INTO FileObject VALUES (2, NOW(), NOW(), "File 1", NULL, "BIN", "F1", 1);
+INSERT INTO FileObject VALUES (3, NOW(), NOW(), "File 1", NULL, "BIN", "F1", 1);
 
-INSERT INTO FileObject VALUES (1, CURTIME(), CURTIME(), "File 1", NULL, 1, "F1", 1);
-INSERT INTO FileObject VALUES (2, CURTIME(), CURTIME(), "File 1", NULL, 1, "F1", 1);
-INSERT INTO FileObject VALUES (3, CURTIME(), CURTIME(), "File 1", NULL, 1, "F1", 1);
-
-INSERT INTO Node VALUES (1, 1, "Chapter 1", 1, 1);
-INSERT INTO Node VALUES (2, 1, "Chapter 2", 2, 1);
-INSERT INTO Node VALUES (3, 2, "Section 2.1", 3, 1);
+INSERT INTO Node VALUES (1, "CHAPTER", "Chapter 1", 1, 1);
+INSERT INTO Node VALUES (2, "CHAPTER", "Chapter 2", 2, 1);
+INSERT INTO Node VALUES (3, "SECTION", "Section 2.1", 3, 1);
 
 INSERT INTO GraphOfContent_Node VALUES (1, 1);
 INSERT INTO GraphOfContent_Node VALUES (1, 2);

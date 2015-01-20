@@ -4,13 +4,16 @@ import java.io.Serializable;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
-
+@XmlRootElement
 public class AuthLoginElementDTO implements Serializable {
 	
 	
 	private String email;
     private String password;
- 
+    
+    public AuthLoginElementDTO() {
+    	
+    }
     public AuthLoginElementDTO(String email, String password) {
         this.email = email;
         this.password = password;

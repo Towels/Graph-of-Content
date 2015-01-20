@@ -20,7 +20,7 @@ angular
     'ngMaterial',
     'angular-md5'
   ])
-  .config(function ($routeProvider) {
+  .config(function ($routeProvider, $locationProvider, $httpProvider) {
     $routeProvider
       .when('/', {
         templateUrl: 'views/main.html',
@@ -41,4 +41,6 @@ angular
       .otherwise({
         redirectTo: '/404.html'
       });
+    $locationProvider.html5Mode(true);
+    $httpProvider.interceptors.push('sessionTimeOutHttpInterceptor');
   });

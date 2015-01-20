@@ -4,13 +4,17 @@ import java.io.Serializable;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
-
+@XmlRootElement
 public class AuthLogoutElementDTO implements Serializable {
 	
 	
 	private String email;
     private String uuid;
- 
+    
+    public AuthLogoutElementDTO() {
+    	
+    }
+    
     public AuthLogoutElementDTO(String email, String uuid) {
         this.email = email;
         this.uuid = uuid;
@@ -25,11 +29,11 @@ public class AuthLogoutElementDTO implements Serializable {
 		this.email = email;
 	}
 
-	public String getUUID() {
+	public String getUuid() {
 		return uuid;
 	}
 
-	public void setUUID(String uuid) {
+	public void setUuid(String uuid) {
 		this.uuid = uuid;
 	}
     

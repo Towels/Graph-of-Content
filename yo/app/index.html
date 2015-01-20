@@ -43,8 +43,19 @@
           <md-button ng-show="loggedIn" ng-click="logOut()" class="md-warn">Logout</md-button>
           <br>
           <md-button ng-click="close()" hide-gt-md class="md-accent">Close Navigation</md-button>
+          <md-divider/>
+          <section ng-controller="LogonCtrl">
+	          <form  ng-hide="loggedIn">
+				<md-text-float label="Email Adress" ng-model="credentials.email" placeholder="Email Adress"></md-text-float>
+				<md-text-float label="Password" ng-model="credentials.password" type="password"></md-text-float>
+				<md-button ng-click="login()">Login</md-button>
+				<span ng-bind="message"></span>
+			  </form>
+			  <md-button ng-click="logout()" ng-show="loggedIn">Logout</md-button>
+		  </section>
         </section>
       </md-content>
+      
     </md-sidenav>
     <md-content flex role="main">
       <md-toolbar class="md-theme-indigo" ng-click="toggleLeft()">
@@ -107,6 +118,7 @@
     <!-- endbower -->
     <!-- endbuild -->
 
+
     <!-- build:js({.tmp,app}) scripts/scripts.js -->
     <script src="scripts/app.js"></script>
     <script src="scripts/controllers/main.js"></script>
@@ -114,7 +126,9 @@
     <script src="scripts/controllers/user.js"></script>
     <script src="scripts/controllers/lecture.js"></script>
     <script src="scripts/controllers/file.js"></script>
+    <script src="scripts/controllers/auth.js"></script>
     <script src="scripts/factories/site.js"></script>
+    <script src="scripts/factories/interceptors.js"></script>
     <!-- endbuild -->
   </body>
   </html>

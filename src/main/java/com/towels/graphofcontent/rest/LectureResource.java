@@ -1,4 +1,4 @@
-package com.towels.graphofcontent.rest;
+/*package com.towels.graphofcontent.rest;
 
 import java.util.List;
 import java.util.Set;
@@ -20,10 +20,8 @@ import com.towels.graphofcontent.data.Lecture;
 import com.towels.graphofcontent.data.Node;
 
 @Stateless
-@ApplicationPath("/resources")
 @Path("lecture")
-
-public class LectureResource extends Application {
+public class LectureResource{
 
 	@PersistenceContext
     private EntityManager entityManager;
@@ -49,4 +47,4 @@ public class LectureResource extends Application {
 		Lecture lecture = entityManager.find(Lecture.class, id);
 		return lecture.getGraph().getVertices();
 	}
-}
+}*/

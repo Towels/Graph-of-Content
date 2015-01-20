@@ -1,4 +1,4 @@
-/*package com.towels.graphofcontent.business;
+package com.towels.graphofcontent.business;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
@@ -19,6 +19,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.Provider;
 
 import com.towels.graphofcontent.dto.AuthAccessElementDTO;
+import com.towels.graphofcontent.util.RestrictedTo;
 
 @Provider
 @Priority(Priorities.AUTHENTICATION)
@@ -35,20 +36,19 @@ public class AuthRequestFilter implements ContainerRequestFilter {
  
     @Override
     public void filter(ContainerRequestContext requestContext) throws IOException {
-        // Get AuthId and AuthToken from HTTP-Header.
-        String authId = requestContext.getHeaderString(AuthAccessElementDTO.PARAM_AUTH_ID);
+        // Get AuthToken from HTTP-Header.
         String authToken = requestContext.getHeaderString(AuthAccessElementDTO.PARAM_AUTH_TOKEN);
  
         // Get method invoked.
         Method methodInvoked = resourceInfo.getResourceMethod();
  
-        if (methodInvoked.isAnnotationPresent(RolesAllowed.class)) {
-            RolesAllowed rolesAllowedAnnotation = methodInvoked.getAnnotation(RolesAllowed.class);
-            Set<String> rolesAllowed = new HashSet<>(Arrays.asList(rolesAllowedAnnotation.value()));
+        if (methodInvoked.isAnnotationPresent(RestrictedTo.class)) {
+            RestrictedTo restrictedToAnnotation = methodInvoked.getAnnotation(RestrictedTo.class);
+            Set<String> rolesAllowed = new HashSet<>(Arrays.asList(restrictedToAnnotation.value()));
  
-            if (!authService.isAuthorized(authId, authToken, rolesAllowed)) {
+            if (!authService.isAuthorized(authToken, rolesAllowed)) {
                 requestContext.abortWith(ACCESS_UNAUTHORIZED);
             }
         }
     }
-}*/
+}

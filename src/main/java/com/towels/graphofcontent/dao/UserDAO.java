@@ -2,6 +2,7 @@ package com.towels.graphofcontent.dao;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 
 import com.towels.graphofcontent.data.User;
@@ -45,20 +46,28 @@ public class UserDAO {
 	}
 
 	public User findUserByEmailAndPassword(String email, String password) {
-		return (User) em
-				.createQuery(
-						"SELECT user FROM User user WHERE user.email = :email AND user.password = :password")
-				.setParameter("email", email)
-				.setParameter("password", password)
-				.getSingleResult();
+		try {
+			return (User) em
+					.createQuery(
+							"SELECT user FROM User user WHERE user.email = :email AND user.password = :password")
+					.setParameter("email", email)
+					.setParameter("password", password)
+					.getSingleResult();
+		} catch(NoResultException e) {
+			return null;
+		}
 	}
 	
-	public User findUserByEmailAndToken(String email, String token) {
-		return (User) em
-				.createQuery(
-						"SELECT user FROM User user WHERE user.email = :email AND user.authToken = :token")
-				.setParameter("token", token)
-				.setParameter("email", email)
-				.getSingleResult();
+	public User findUserByToken(String token) {
+		try {
+			return (User) em
+					.createQuery(
+							"SELECT user FROM User user LEFT JOIN FETCH Token token WHERE user.token.uuid = :token")
+					.setParameter("token", token)
+					.getSingleResult();
+		} catch(NoResultException e) {
+			return null;
+		}
+		
 	}
 }

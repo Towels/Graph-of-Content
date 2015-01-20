@@ -10,7 +10,11 @@ public class AuthLogoutElementDTO implements Serializable {
 	
 	private String email;
     private String uuid;
- 
+    
+    public AuthLogoutElementDTO() {
+    	
+    }
+    
     public AuthLogoutElementDTO(String email, String uuid) {
         this.email = email;
         this.uuid = uuid;

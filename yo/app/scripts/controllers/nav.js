@@ -10,7 +10,7 @@
  */
 
 angular.module('graphOfContentApp')
-.controller('NavCtrl', function($scope, $timeout, $mdSidenav, site, auth){
+.controller('NavCtrl', function($scope, $timeout, $mdSidenav, site){
   $scope.site = site;
   site.updateSite('Graph of Content', 'A spectacular Web app');
   $scope.toggleLeft = function() {
@@ -19,24 +19,6 @@ angular.module('graphOfContentApp')
   $scope.close = function() {
     $mdSidenav('left').close();
   };
-  $scope.logIn = function(name, password){
-  	auth.logIn(name, password);
-  };
-  $scope.logOut = function(){
-  	auth.logOut();
-  };
-  $scope.signUp = function(){
-  	auth.signUp();
-  };
-  $scope.currentUser = auth.user;
-  $scope.loggedIn = auth.loggedIn;
-
-  $scope.$watch(function(){
-  	return auth.loggedIn;
-  },
-  function(newValue){
-  	$scope.loggedIn = newValue;
-  });
 })//TODO move this into proper place
 .directive('resize', function ($window) {
 	return function (scope) {

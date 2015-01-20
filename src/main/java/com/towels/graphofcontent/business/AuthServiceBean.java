@@ -39,7 +39,7 @@ public class AuthServiceBean{
     }
     
     public boolean logout(AuthLogoutElementDTO logoutElement) {
-        User user = userDAO.findUserByToken(logoutElement.getUUID());
+        User user = userDAO.findUserByToken(logoutElement.getUuid());
         if (user != null) {
         	if(user.getToken() != null) {
         		revokeToken(user.getToken().getUuid());
@@ -51,9 +51,8 @@ public class AuthServiceBean{
         return false;
     }
     
-	public boolean isAuthorized(String authToken,
-			Set<String> rolesAllowed) {
-		 User user = userDAO.findUserByToken(authToken);
+	public boolean isAuthorized(String authToken) {
+		User user = userDAO.findUserByToken(authToken);
         if (user != null) {
             return true; // TODO Include Role Checks here.
         } else {

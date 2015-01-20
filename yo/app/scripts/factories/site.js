@@ -24,13 +24,20 @@ angular.module('graphOfContentApp')
 .factory('authSrv', function(){
     //replace with proper api calls and stuff
     var auth = {};
-    auth.loggedIn = true;
+    auth.loggedIn = false;
     auth.user = {
-        email: 'oliverconzen@me.com'
+        email: '',
+        uuid: ''
     };
     auth.setEmail = function(email){
     	auth.user.email = email;
     };
+    auth.setUuid = function(uuid)  {
+    	auth.user.uuid = uuid;
+    }
+    auth.setLoggedIn = function(loggedIn) {
+    	auth.loggedIn = loggedIn;
+    }
     return auth;
 })
 .constant('rootURL', 'http://localhost:8080/resources')

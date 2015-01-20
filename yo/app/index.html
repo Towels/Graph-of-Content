@@ -45,10 +45,10 @@
           <br>
           <md-button ng-click="close()" hide-gt-md class="md-accent">Close Navigation</md-button>
           <md-divider/>
-          <section>
-	          <form ng-controller="LogonCtrl" ng-hide="loggedIn">
-				<md-text-float label="Email Adress" ng-model="email" placeholder="Email Adress"></md-text-float>
-				<md-text-float label="Password" ng-model="password" type="password"></md-text-float>
+          <section ng-controller="LogonCtrl">
+	          <form  ng-hide="loggedIn">
+				<md-text-float label="Email Adress" ng-model="credentials.email" placeholder="Email Adress"></md-text-float>
+				<md-text-float label="Password" ng-model="credentials.password" type="password"></md-text-float>
 				<md-button ng-click="login()">Login</md-button>
 				<span ng-bind="message"></span>
 			  </form>
@@ -129,7 +129,7 @@
     <script src="scripts/controllers/file.js"></script>
     <script src="scripts/controllers/auth.js"></script>
     <script src="scripts/factories/site.js"></script>
-    
+    <script src="scripts/factories/interceptors.js"></script>
     <!-- endbuild -->
   </body>
   </html>

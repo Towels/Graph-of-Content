@@ -1,5 +1,8 @@
 package com.towels.graphofcontent.rest;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
@@ -19,21 +22,23 @@ import javax.ws.rs.core.NewCookie;
 import javax.ws.rs.core.Response;
 
 import com.towels.graphofcontent.business.AuthServiceBean;
+import com.towels.graphofcontent.dao.UserDAO;
 import com.towels.graphofcontent.dto.AuthAccessElementDTO;
 import com.towels.graphofcontent.dto.AuthLoginElementDTO;
 import com.towels.graphofcontent.dto.AuthLogoutElementDTO;
-import com.towels.graphofcontent.util.RestrictedTo;
+import com.towels.graphofcontent.util.UserAuthorization;
 
 @Stateless
 @Path("auth")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class AuthResource {
- 
+	
+
+	    
     @EJB
     AuthServiceBean authService;
-    
-    
+   
     @GET
     public String info(@Context HttpServletRequest request){
     	return "Authentication is Running";
@@ -54,7 +59,7 @@ public class AuthResource {
     
     @POST
     @Path("logout")
-    @RestrictedTo("user")
+    @UserAuthorization
     @Consumes(MediaType.APPLICATION_JSON)
     public Response logout(@Context HttpServletRequest request, AuthLogoutElementDTO logoutElement) {
         boolean result = authService.logout(logoutElement);
@@ -63,6 +68,6 @@ public class AuthResource {
             request.getSession().setAttribute(AuthAccessElementDTO.PARAM_AUTH_TOKEN, "");
             return Response.ok().build();
         } 
-        	return Response.status(Response.Status.NOT_MODIFIED).entity("No logout possible!").build();
+        	return Response.status(Response.Status.NOT_MODIFIED).build();
     }
 }

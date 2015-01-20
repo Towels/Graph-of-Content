@@ -1,6 +1,10 @@
 package com.towels.graphofcontent.dao;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
@@ -8,7 +12,8 @@ import javax.persistence.PersistenceContext;
 import com.towels.graphofcontent.data.User;
 @Stateless
 public class UserDAO {
-
+	
+	private static Logger logger = Logger.getLogger(UserDAO.class.getCanonicalName());
 	@PersistenceContext
 	private EntityManager em;
 	
@@ -66,6 +71,7 @@ public class UserDAO {
 					.setParameter("token", token)
 					.getSingleResult();
 		} catch(NoResultException e) {
+			logger.log(Level.INFO, "No User for Token found!" + token);
 			return null;
 		}
 		

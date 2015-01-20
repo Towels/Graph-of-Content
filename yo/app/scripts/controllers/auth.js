@@ -12,41 +12,43 @@
 angular.module('graphOfContentApp')
 .controller('LogonCtrl', function($scope, $http, $location, authURL, authSrv){
 	
-	$scope.email;
-	$scope.password;
-	$scope.loggedIn = authSrv.loggedIn;
+	$scope.credentials = {
+		email: '',
+		password: ''
+	}
+	
+	$scope.$watch(function() {
+		return authSrv.loggedIn;
+	}, function(newValue, oldValue){
+		$scope.loggedIn = newValue;
+	});
 	
 	$scope.message;
 	
-	$scope.logon = function(){
-		var credentials = {email: $scope.email, password: $scope.password}
-		$http.post(authURL+"/login", credentials).then(function(response) {
-			if(response.data === null) {
+	$scope.login = function(){
+		$http.post(authURL+"/login", $scope.credentials).then(function(response) {
+			if(response.data === "") {
 				$scope.message = "Wrong email or password!";
 			} else {
-				  $http.defaults.headers.common["X-AUTH-TOKEN"] = response.data.authToken;
-				  authSrv.setEmail($scope.email);
+				  $http.defaults.headers.common["auth-token"] = response.data.authToken;
+				  authSrv.setEmail(response.data.authId);
+				  authSrv.setUuid(response.data.authToken);
 				  authSrv.setLoggedIn(true);
 				  $scope.message = "";
 			}
 		});
 	};
 	
-	
-	var interceptor = function() {
-		  // Die Promise enthält eine Response; wir müssen wieder eine Promise zurückliefern
-		  return function(promise) {
-		    return promise.then(
-		      function(response) { return response;}, // alles ok, dabei belassen wir es
-		      function(response) {
-		        if (response.status == 401) {
-		          $location.path("/");
-		          authSrv.setLoggedIn(false);
-		        }
-		        return $q.reject(response);
-		      }
-		    );
-		  };
-		};
-	$http.interceptors.push(interceptor);
+	$scope.logout = function() {
+		$http.post(authURL+"/logout", authSrv.user).then(
+			function(response) {
+				authSrv.setLoggedIn(false);
+				authSrv.setEmail("");
+				authSrv.setUuid("");
+			},
+			function(response){
+				console.log("logout-Fehler");
+			});
+		
+	};
 });

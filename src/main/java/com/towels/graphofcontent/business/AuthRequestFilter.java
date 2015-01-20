@@ -33,7 +33,7 @@ public class AuthRequestFilter implements ContainerRequestFilter {
     private static final Response ACCESS_UNAUTHORIZED = Response.status(Response.Status.UNAUTHORIZED).build();
  
     @EJB
-    AuthServiceBean authService;
+    private AuthServiceBean authService;
  
     @Context
     private ResourceInfo resourceInfo;

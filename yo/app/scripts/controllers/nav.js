@@ -10,9 +10,18 @@
  */
 
 angular.module('graphOfContentApp')
-.controller('NavCtrl', function($scope, $timeout, $mdSidenav, site){
+.controller('NavCtrl', function($scope, $timeout, $mdSidenav, site, authSrv){
   $scope.site = site;
   site.updateSite('Graph of Content', 'A spectacular Web app');
+  
+  $scope.loggedIn;
+  
+  $scope.$watch(function() {
+	  return authSrv.loggedIn;
+  },function(newValue, oldValue) {
+	  $scope.loggedIn = newValue;
+  });
+  
   $scope.toggleLeft = function() {
     $mdSidenav('left').toggle();
   };

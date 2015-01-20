@@ -39,19 +39,16 @@
           <md-button ng-href="#/file" ng-disabled="!loggedIn" class="md-primary">Files</md-button>
           <md-button ng-href="#/lecture" ng-disabled="!loggedIn" class="md-primary">Lectures</md-button>
           <md-divider></md-divider>
-          <md-button ng-hide="loggedIn" ng-click="logIn('miladiir', 'anderes Passwort')" class="md-warn">Login</md-button>
-          <md-button ng-show="loggedIn" ng-click="logOut()" class="md-warn">Logout</md-button>
           <br>
           <md-button ng-click="close()" hide-gt-md class="md-accent">Close Navigation</md-button>
-          <md-divider/>
           <section ng-controller="LogonCtrl">
 	          <form  ng-hide="loggedIn">
 				<md-text-float label="Email Adress" ng-model="credentials.email" placeholder="Email Adress"></md-text-float>
 				<md-text-float label="Password" ng-model="credentials.password" type="password"></md-text-float>
-				<md-button ng-click="login()">Login</md-button>
+				<md-button ng-click="login()" class="md-warn">Login</md-button>
 				<span ng-bind="message"></span>
 			  </form>
-			  <md-button ng-click="logout()" ng-show="loggedIn">Logout</md-button>
+			  <md-button ng-click="logout()" ng-show="loggedIn" class="md-warn">Logout</md-button>
 		  </section>
         </section>
       </md-content>

@@ -41,6 +41,5 @@ angular
       .otherwise({
         redirectTo: '/404.html'
       });
-    $locationProvider.html5Mode(true);
     $httpProvider.interceptors.push('sessionTimeOutHttpInterceptor');
   });

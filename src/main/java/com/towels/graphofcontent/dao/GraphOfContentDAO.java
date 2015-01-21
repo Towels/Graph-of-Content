@@ -1,7 +1,11 @@
 package com.towels.graphofcontent.dao;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 
 import com.towels.graphofcontent.data.GraphOfContent;
@@ -9,6 +13,8 @@ import com.towels.graphofcontent.data.Lecture;
 
 @Stateless
 public class GraphOfContentDAO {
+	private static Logger logger = Logger.getLogger(GraphOfContentDAO.class.getCanonicalName());
+	
 	@PersistenceContext
 	private EntityManager em;
 	
@@ -34,5 +40,19 @@ public class GraphOfContentDAO {
 						"SELECT graph FROM GraphOfContent graph WHERE graph.id = :id")
 				.setParameter("id", id)
 				.getSingleResult();
+	}
+
+	public GraphOfContent findGraphOfContentByLectureID(Long lectureID) {
+		try{
+			return (GraphOfContent) em
+					.createQuery(
+							"SELECT lecture.graph FROM Lecture lecture INNER JOIN FETCH GraphOfContent graph WHERE lecture.id = :id")
+					.setParameter("id", lectureID)
+					.getSingleResult();
+		} catch(NoResultException e) {
+			logger.log(Level.WARNING, "No Graph Of Content found for Lecture with id="+lectureID);
+			return null;
+		}
+		
 	}
 }

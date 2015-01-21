@@ -15,39 +15,39 @@ angular.module('graphOfContentApp')
 	$scope.credentials = {
 		email: '',
 		password: ''
-	}
+	};
 	
 	$scope.$watch(function() {
 		return authSrv.loggedIn;
-	}, function(newValue, oldValue){
+	}, function(newValue){
 		$scope.loggedIn = newValue;
 	});
 	
-	$scope.message;
+	$scope.message = '';
 	
 	$scope.login = function(){
-		$http.post(authURL+"/login", $scope.credentials).then(function(response) {
-			if(response.data === "") {
-				$scope.message = "Wrong email or password!";
+		$http.post(authURL+'/login', $scope.credentials).then(function(response) {
+			if(response.data === '') {
+				$scope.message = 'Wrong email or password!';
 			} else {
-				  $http.defaults.headers.common["auth-token"] = response.data.authToken;
+				  $http.defaults.headers.common['auth-token'] = response.data.authToken;
 				  authSrv.setEmail(response.data.authId);
 				  authSrv.setUuid(response.data.authToken);
 				  authSrv.setLoggedIn(true);
-				  $scope.message = "";
+				  $scope.message = '';
 			}
 		});
 	};
 	
 	$scope.logout = function() {
-		$http.post(authURL+"/logout", authSrv.user).then(
+		$http.post(authURL+'/logout', authSrv.user).then(
 			function(response) {
 				authSrv.setLoggedIn(false);
-				authSrv.setEmail("");
-				authSrv.setUuid("");
+				authSrv.setEmail('');
+				authSrv.setUuid('');
 			},
 			function(response){
-				console.log("logout-Fehler");
+				console.log('logout-Fehler');
 			});
 		
 	};

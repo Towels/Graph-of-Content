@@ -34,10 +34,10 @@ angular.module('graphOfContentApp')
     };
     auth.setUuid = function(uuid)  {
     	auth.user.uuid = uuid;
-    }
+    };
     auth.setLoggedIn = function(loggedIn) {
     	auth.loggedIn = loggedIn;
-    }
+    };
     return auth;
 })
 .constant('rootURL', 'http://localhost:8080/resources')

@@ -46,16 +46,16 @@ public class GraphServiceBean {
 		
 		for(DirectedEdge edge : edges) {
 			EdgeDTO edgeDTO = new EdgeDTO();
-			edgeDTO.id = edge.getId();
-			edgeDTO.source = edge.getSource().getId();
-			edgeDTO.target = edge.getTarget().getId();
+			edgeDTO.id = edge.getId().toString();
+			edgeDTO.source = edge.getSource().getId().toString();
+			edgeDTO.target = edge.getTarget().getId().toString();
 			
 			graphDTO.edges.add(edgeDTO);
 		}
 		
 		for(Node node : nodes){
 			NodeDTO nodeDTO = new NodeDTO();
-			nodeDTO.id = node.getId();
+			nodeDTO.id = node.getId().toString();
 			nodeDTO.label = node.getTitle();
 			nodeDTO.x = 1; //TODO Where does the coordinates came from?
 			nodeDTO.y = 1;

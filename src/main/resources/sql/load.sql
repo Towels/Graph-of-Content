@@ -1,6 +1,7 @@
 INSERT INTO Token VALUES ("a7a263c0-c977-407f-a2eb-7e728cafd264", NOW());
 
 INSERT INTO User VALUES (1, NOW(), "test@mail.xyz", NOW(), "TestUser", "angular", NOW(), "a7a263c0-c977-407f-a2eb-7e728cafd264");	
+INSERT INTO User VALUES (2, NOW(), "test", NOW(), "TestUser", "angular", NOW(), NULL);	
 
 INSERT INTO GraphOfContent VALUES (1);
 INSERT INTO Lecture VALUES (1, NOW(), NOW(), "TowelsRule", "Prof. Dr. Washcloth", 100, "Bathroom University", 1, 1);

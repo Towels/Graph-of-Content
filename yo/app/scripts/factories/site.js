@@ -42,6 +42,7 @@ angular.module('graphOfContentApp')
 })
 .constant('rootURL', 'http://localhost:8080/resources')
 .constant('authURL', 'http://localhost:8080/angular/resources/auth')
+.constant('graphURL', 'http://localhost:8080/angular/resources/goc')
 .constant('userURL', 'http://localhost:8080/resources/user')
 .constant('fileURL', 'http://localhost:8080/resources/file')
 .constant('lectureURL', 'http://localhost:8080/resources/lecture');

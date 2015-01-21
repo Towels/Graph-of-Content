@@ -1,8 +1,6 @@
 package com.towels.graphofcontent.business;
 
 import java.util.Date;
-import java.util.Set;
-
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 

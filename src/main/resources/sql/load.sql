@@ -3,7 +3,10 @@ INSERT INTO Token VALUES ("a7a263c0-c977-407f-a2eb-7e728cafd264", NOW());
 INSERT INTO User VALUES (1, NOW(), "test@mail.xyz", NOW(), "TestUser", "angular", NOW(), "a7a263c0-c977-407f-a2eb-7e728cafd264");	
 
 INSERT INTO GraphOfContent VALUES (1);
-INSERT INTO Lecture VALUES (1, NOW(), NOW(), "TowelsRule", "Prof. Dr. Washcloth", 100, "Bathroom University", 1, 1);
+INSERT INTO Lecture VALUES (1, NOW(), NOW(), "TowelsRule", "Prof. Dr. Washcloth", "Bathroom University", "PUBLIC", 1, 1);
+INSERT INTO Lecture VALUES (2, NOW(), NOW(), "Do not forget to bring your Towel", "M. Sc. Towely", "Restroom University", "PRIVATE", 1, 1);
+INSERT INTO Lecture VALUES (3, NOW(), NOW(), "Washing Stuff", "Grandma Towels", "Home for the Elderly", "PUBLIC", 1, 1);
+
 
 INSERT INTO FileObject VALUES (1, NOW(), NOW(), "File 1", NULL, "BIN", "F1", 1);
 INSERT INTO FileObject VALUES (2, NOW(), NOW(), "File 1", NULL, "BIN", "F1", 1);

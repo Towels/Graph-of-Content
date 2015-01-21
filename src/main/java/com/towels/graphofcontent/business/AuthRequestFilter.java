@@ -2,16 +2,11 @@ package com.towels.graphofcontent.business;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.annotation.Priority;
-import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
-import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Priorities;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
@@ -21,7 +16,6 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.Provider;
 
 import com.towels.graphofcontent.dto.AuthAccessElementDTO;
-import com.towels.graphofcontent.rest.AuthResource;
 import com.towels.graphofcontent.util.UserAuthorization;
 
 @Provider

@@ -5,10 +5,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import com.towels.graphofcontent.data.GraphOfContent;
-import com.towels.graphofcontent.data.Lecture;
 
 @Stateless
-public class GraphOfContentDAO {
+public class GraphDAO {
 	@PersistenceContext
 	private EntityManager em;
 	

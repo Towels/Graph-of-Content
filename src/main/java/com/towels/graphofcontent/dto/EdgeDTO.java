@@ -2,7 +2,7 @@ package com.towels.graphofcontent.dto;
 
 
 public class EdgeDTO {
-	public long id;
-	public int source;
-	public int target;
+	public String id;
+	public String source;
+	public String target;
 }

@@ -54,6 +54,15 @@ public class Node {
 		this.file = file;
 	}
 	
+	
+	public NodeType getNodetype() {
+		return nodetype;
+	}
+
+	public void setNodetype(NodeType nodetype) {
+		this.nodetype = nodetype;
+	}
+
 	/**
 	 * Special implementation of the equals method due to some issues with lazy
 	 * fetching and creation of entities. See http://burtbeckwith.com/blog/?p=53

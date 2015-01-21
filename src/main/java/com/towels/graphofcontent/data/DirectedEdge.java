@@ -1,11 +1,13 @@
 package com.towels.graphofcontent.data;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name="DirectedEdge")
@@ -14,9 +16,11 @@ public class DirectedEdge{
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long Id;
 	
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.EAGER)
+	@NotNull
 	private Node source;
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.EAGER)
+	@NotNull
 	private Node target;
 	
 	public DirectedEdge(){
@@ -82,7 +86,15 @@ public class DirectedEdge{
 	 **/
 	@Override
 	public int hashCode() {
-		int hash = this.getSource().hashCode() * 31 + this.getTarget().hashCode();
+		int hash = 0;
+		if(this.getSource() != null ) {
+			hash += this.getSource().hashCode() * 31;
+			if(this.getTarget() != null) {
+				hash += this.getTarget().hashCode();
+			} 
+		} else {
+			hash += this.getId().hashCode();
+		}
 
 		return hash;
 	}

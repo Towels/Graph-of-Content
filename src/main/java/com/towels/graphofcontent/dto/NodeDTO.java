@@ -3,7 +3,7 @@ package com.towels.graphofcontent.dto;
 
 
 public class NodeDTO {
-	public long id;
+	public String id;
 	public String label;
 	public int x;
 	public int y;

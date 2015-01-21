@@ -28,7 +28,7 @@ public class GraphOfContent {
 	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
 	private Set<Node> vertices = new HashSet<Node>();
 	
-	
+	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
 	private Set<DirectedEdge> edges = new HashSet<DirectedEdge>();
 	
 	public Long getId() {

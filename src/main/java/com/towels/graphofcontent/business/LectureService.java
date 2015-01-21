@@ -1,6 +1,6 @@
 package com.towels.graphofcontent.business;
 
-import com.towels.graphofcontent.dao.GraphDAO;
+import com.towels.graphofcontent.dao.GraphOfContentDAO;
 import com.towels.graphofcontent.dao.LectureDAO;
 import com.towels.graphofcontent.dao.UserDAO;
 import com.towels.graphofcontent.data.Lecture;
@@ -20,7 +20,7 @@ public class LectureService {
 	UserDAO udao;
 	
 	@EJB
-	GraphDAO gdao;
+	GraphOfContentDAO gdao;
 	
 	public void mergeChanges(LectureDTO dto){
 		Lecture original = ldao.findLectureById(dto.id);

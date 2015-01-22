@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.util.List;
 
 import com.towels.graphofcontent.data.Lecture;
+import com.towels.graphofcontent.data.User;
 
 public class LectureDTO {
 	
@@ -28,26 +29,17 @@ public class LectureDTO {
 		}
 		this.dateCreated = lecture.getDateCreated();
 		this.lastModified = lecture.getLastModified();
-		//TODO tidy up
-		try{
-			this.graph = lecture.getGraph().getId();
+		for(User user : lecture.getModerators()){
+			moderators.add(user.getId());
 		}
-		catch(NullPointerException e){
-			
-		}
-		
 	}
 	public Long id;
 	public String name;
 	public String university;
 	public String professor;
 	public String visibility;
-	public Long graph;
 	public Long owner;
-	//public List<Long> moderators;
+	public List<Long> moderators;
 	public Timestamp dateCreated;
 	public Timestamp lastModified;
-	
-	public List<Long> addedMods;
-	public List<Long> removedMods;
 }

@@ -21,9 +21,9 @@ import com.towels.graphofcontent.business.LectureService;
 import com.towels.graphofcontent.dao.LectureDAO;
 import com.towels.graphofcontent.data.Lecture;
 import com.towels.graphofcontent.dto.LectureDTO;
+import com.towels.graphofcontent.dto.LongListDTO;
 
 @Stateless
-@ApplicationPath("/resources")
 @Path("lecture")
 
 public class LectureResource extends Application {
@@ -74,4 +74,19 @@ public class LectureResource extends Application {
         Lecture lecture = dao.findLectureById(id);
         dao.delete(lecture);
     }
+	
+	@PUT
+	@Path("{id}/moderator")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void addModerators(@PathParam("id") Long id, LongListDTO dts){
+		srv.addModerators(id, dto);
+	}
+	
+	@DELETE
+	@Path("{id}/moderator")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void removeModerators(@PathParam("id") Long id, LongListDTO dto){
+		Lecture lecture = dao.findLectureById(id);
+		srv.removeModerators(id, dto);
+	}
 }

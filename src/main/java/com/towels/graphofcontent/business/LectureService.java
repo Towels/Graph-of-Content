@@ -1,10 +1,14 @@
 package com.towels.graphofcontent.business;
 
+import java.util.List;
+
 import com.towels.graphofcontent.dao.GraphOfContentDAO;
 import com.towels.graphofcontent.dao.LectureDAO;
 import com.towels.graphofcontent.dao.UserDAO;
 import com.towels.graphofcontent.data.Lecture;
+import com.towels.graphofcontent.data.User;
 import com.towels.graphofcontent.dto.LectureDTO;
+import com.towels.graphofcontent.dto.LongListDTO;
 import com.towels.graphofcontent.util.VisibilityType;
 
 import javax.ejb.EJB;
@@ -39,23 +43,39 @@ public class LectureService {
 				
 			}
 		}
-		if(dto.addedMods != null){
-			for(long i: dto.addedMods){
-				original.addModerator(udao.findUserById(i));
-			}
-		}
-		if(dto.removedMods != null){
-			for(long i: dto.removedMods){
-				original.removeModerator(udao.findUserById(i));
-			}
-		}
 		
 		//Up for Discussion
 		//TODO only owner can change owner of a lecture
 		if(dto.owner != null) original.setOwner(udao.findUserById(dto.owner));
-		//TODO remove this once the create website is complete. gID should be added only once
-		if(dto.graph != null) original.setGraph(gdao.findGraphOfContentById(dto.graph));
 		
 		ldao.update(original);
+	}
+	
+	public void addModerators(Long id, LongListDTO moderators){
+		Lecture lecture = ldao.findLectureById(id);
+		for(Long mod: moderators.){
+			try{
+				User moderator = udao.findUserById(mod);
+				lecture.addModerator(moderator);
+			}
+			catch(NullPointerException e){
+				
+			}
+		}
+		ldao.update(lecture);
+	}
+	
+	public void removeModerators(Long id, LongListDTO moderators){
+		Lecture lecture = ldao.findLectureById(id);
+		for(Long mod: moderators){
+			try{
+				User moderator = udao.findUserById(mod);
+				lecture.removeModerator(moderator);
+			}
+			catch(NullPointerException e){
+				
+			}
+		}
+		ldao.update(lecture);
 	}
 }

@@ -57,8 +57,8 @@ public class GraphServiceBean {
 			NodeDTO nodeDTO = new NodeDTO();
 			nodeDTO.id = node.getId().toString();
 			nodeDTO.label = node.getTitle();
-			nodeDTO.x = 1; //TODO Where does the coordinates came from?
-			nodeDTO.y = 1;
+			nodeDTO.x = node.getX(); //TODO Where does the coordinates came from?
+			nodeDTO.y = node.getY();
 			nodeDTO.size = 1;
 			nodeDTO.type = node.getNodetype().name();
 			

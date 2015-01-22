@@ -12,6 +12,7 @@ import javax.persistence.Inheritance;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import com.towels.graphofcontent.util.NodeType;
 
@@ -24,11 +25,18 @@ public class Node {
 	private Long id;
 	@Column(name = "title")
 	private String title;
+	@Column
+	@NotNull
+	private int x;
+	@Column 
+	@NotNull
+	private int y;
 
 	@ManyToOne
 	private FileObject file;
 	
 	@Column(name="nodetype")
+	@NotNull
 	private NodeType nodetype;
 	
 	public Long getId() {
@@ -63,6 +71,22 @@ public class Node {
 
 	public void setNodetype(NodeType nodetype) {
 		this.nodetype = nodetype;
+	}
+	
+	public int getX() {
+		return x;
+	}
+
+	public void setX(int x) {
+		this.x = x;
+	}
+
+	public int getY() {
+		return y;
+	}
+
+	public void setY(int y) {
+		this.y = y;
 	}
 
 	/**

@@ -32,22 +32,16 @@ import com.towels.graphofcontent.dto.GraphDTO;
 import com.towels.graphofcontent.util.UserAuthorization;
 
 @Stateless
-@Path("goc")
+@Path("goc/{lectureID}")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class GraphResource {
 	    
     @EJB
-    GraphServiceBean graphService;
-   
-    @GET
-    public String info(@Context HttpServletRequest request){
-    	return "Graph is Running";
-    
-    }
+    GraphServiceBean graphService;    
+
     
     @GET
-    @Path("get/{lectureID}")
     @UserAuthorization
     public GraphDTO getGraph(@Context HttpServletRequest request, @PathParam("lectureID") Long lectureID) {
         return graphService.getGraph(lectureID);

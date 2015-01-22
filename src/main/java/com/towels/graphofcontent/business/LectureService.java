@@ -53,7 +53,7 @@ public class LectureService {
 	
 	public void addModerators(Long id, LongListDTO moderators){
 		Lecture lecture = ldao.findLectureById(id);
-		for(Long mod: moderators.){
+		for(Long mod: moderators.list){
 			try{
 				User moderator = udao.findUserById(mod);
 				lecture.addModerator(moderator);
@@ -67,7 +67,7 @@ public class LectureService {
 	
 	public void removeModerators(Long id, LongListDTO moderators){
 		Lecture lecture = ldao.findLectureById(id);
-		for(Long mod: moderators){
+		for(Long mod: moderators.list){
 			try{
 				User moderator = udao.findUserById(mod);
 				lecture.removeModerator(moderator);

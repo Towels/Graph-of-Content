@@ -1,6 +1,6 @@
 package com.towels.graphofcontent.data;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.UUID;
 
 import javax.persistence.Column;
@@ -18,13 +18,13 @@ public class Token {
 	private String uuid;
 	
 	@Column(name="timestamp")
-	private Date timestamp;
+	private Timestamp timestamp;
 	
 	public String getUuid() {
 		return uuid;
 	}
 
-	public Date getTimestamp() {
+	public Timestamp getTimestamp() {
 		return timestamp;
 	}
 
@@ -36,7 +36,7 @@ public class Token {
 		if(this.uuid == null){
 			UUID uuid = UUID.randomUUID();
 			this.uuid = uuid.toString();
-			this.timestamp = new Date(System.currentTimeMillis());
+			this.timestamp = new Timestamp(System.currentTimeMillis());
 		}
 	}
 	

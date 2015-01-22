@@ -1,9 +1,7 @@
 package com.towels.graphofcontent.data;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.Set;
-import java.util.UUID;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,7 +9,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -33,11 +30,11 @@ public class User {
 	@Column(name = "password")
 	private String password;
 	@Column(name = "dateCreated")
-	private Date dateCreated;
+	private Timestamp dateCreated;
 	@Column(name = "passwordLastChanged")
-	private Date passwordLastChanged;
+	private Timestamp passwordLastChanged;
 	@Column(name = "emailLastChanged")
-	private Date emailLastChanged;
+	private Timestamp emailLastChanged;
 	
 	@OneToOne(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
 	private Token token;
@@ -79,7 +76,7 @@ public class User {
 	public boolean setEmail(String email) {
 		if (true) {
 			this.email = email;
-			this.emailLastChanged = new Date(System.currentTimeMillis());
+			this.emailLastChanged = new Timestamp(System.currentTimeMillis());
 			return true;
 		} else
 			return false;
@@ -97,33 +94,33 @@ public class User {
 	public boolean setPassword(String password) {
 		if (true) {
 			this.password = password;
-			this.passwordLastChanged = new Date(System.currentTimeMillis());
+			this.passwordLastChanged = new Timestamp(System.currentTimeMillis());
 			return true;
 		} else
 			return false;
 	}
 
-	public Date getDateCreated() {
+	public Timestamp getDateCreated() {
 		return this.dateCreated;
 	}
 	
-	public void setDateCreated(Date newDate) {
+	public void setDateCreated(Timestamp newDate) {
 		this.dateCreated = newDate;
 	}
 
-	public Date getPasswordLastChanged() {
+	public Timestamp getPasswordLastChanged() {
 		return this.passwordLastChanged;
 	}
 	
-	public void setPasswordLastChanged(Date newDate) {
+	public void setPasswordLastChanged(Timestamp newDate) {
 		this.passwordLastChanged = newDate;
 	}
 
-	public Date getEmailLastChanged() {
+	public Timestamp getEmailLastChanged() {
 		return this.emailLastChanged;
 	}
 
-	public void setEmailLastChanged(Date newDate) {
+	public void setEmailLastChanged(Timestamp newDate) {
 		this.emailLastChanged = newDate;
 	}
 

@@ -1,7 +1,8 @@
 package com.towels.graphofcontent.data;
 
 import java.sql.Blob;
-import java.sql.Date;
+import java.sql.Timestamp;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -28,9 +29,9 @@ public class FileObject {
 	@Column(name="file")
 	private Blob file;
 	@Column(name="dateCreated")
-	private Date dateCreated;
+	private Timestamp dateCreated;
 	@Column(name="dateLastModified")
-	private Date dateLastModified;
+	private Timestamp dateLastModified;
 	@Column(name="fileType")
 	@Enumerated(EnumType.STRING)
 	private FileType fileType;
@@ -61,7 +62,7 @@ public class FileObject {
 	public boolean setDescription(String description){
 		if(true){
 			this.description = description;
-			this.dateLastModified = new Date(System.currentTimeMillis());
+			this.dateLastModified = new Timestamp(System.currentTimeMillis());
 			return true;
 		}
 		else return false;
@@ -77,19 +78,19 @@ public class FileObject {
 	
 
 	
-	public Date getDateCreated(){
+	public Timestamp getDateCreated(){
 		return this.dateCreated;
 	}
 	
-	public void setDateCreated(Date date) {
+	public void setDateCreated(Timestamp date) {
 		this.dateCreated = date;
 	}
 	
-	public Date getDateLastModified(){
+	public Timestamp getDateLastModified(){
 		return this.dateLastModified;
 	}
 	
-	public void setDateLastModified(Date date) {
+	public void setDateLastModified(Timestamp date) {
 		this.dateLastModified = date;
 	}
 	

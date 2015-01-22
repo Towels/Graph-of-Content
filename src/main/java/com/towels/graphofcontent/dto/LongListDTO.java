@@ -1,6 +1,8 @@
 package com.towels.graphofcontent.dto;
 
+import java.util.List;
+
 public class LongListDTO {
 
-	List<Long> longs;
+	public List<Long> list;
 }

@@ -78,7 +78,7 @@ public class LectureResource extends Application {
 	@PUT
 	@Path("{id}/moderator")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public void addModerators(@PathParam("id") Long id, LongListDTO dts){
+	public void addModerators(@PathParam("id") Long id, LongListDTO dto){
 		srv.addModerators(id, dto);
 	}
 	

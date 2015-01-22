@@ -36,7 +36,7 @@ public class AuthRequestFilter implements ContainerRequestFilter {
     public void filter(ContainerRequestContext requestContext) throws IOException {
         // Get AuthToken from HTTP-Header.
         String authToken = requestContext.getHeaderString(AuthAccessElementDTO.PARAM_AUTH_TOKEN);
-        
+        requestContext.setProperty(AuthAccessElementDTO.PARAM_AUTH_TOKEN, authToken);
         // Get method invoked.
         Method methodInvoked = resourceInfo.getResourceMethod();
         logger.log(Level.INFO, "Filtering for token: "+authToken);
@@ -45,6 +45,8 @@ public class AuthRequestFilter implements ContainerRequestFilter {
             if (!authService.isAuthorized(authToken)) {
                 logger.log(Level.INFO, "Unauthorized!");
                 requestContext.abortWith(ACCESS_UNAUTHORIZED);
+            } else {
+            	
             }
         }
     }

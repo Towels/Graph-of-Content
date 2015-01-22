@@ -30,7 +30,12 @@ public class LectureDTO {
 		this.dateCreated = lecture.getDateCreated();
 		this.lastModified = lecture.getLastModified();
 		for(User user : lecture.getModerators()){
-			moderators.add(user.getId());
+			try{
+				this.moderators.add(user.getId());
+			}
+			catch(NullPointerException e){
+				
+			}
 		}
 	}
 	public Long id;

@@ -86,7 +86,6 @@ public class LectureResource extends Application {
 	@Path("{id}/moderator")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public void removeModerators(@PathParam("id") Long id, LongListDTO dto){
-		Lecture lecture = dao.findLectureById(id);
 		srv.removeModerators(id, dto);
 	}
 }

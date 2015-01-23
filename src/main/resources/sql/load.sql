@@ -13,9 +13,9 @@ INSERT INTO FileObject VALUES (1, NOW(), NOW(), "File 1", NULL, "BIN", "F1", 1);
 INSERT INTO FileObject VALUES (2, NOW(), NOW(), "File 1", NULL, "BIN", "F1", 1);
 INSERT INTO FileObject VALUES (3, NOW(), NOW(), "File 1", NULL, "BIN", "F1", 1);
 
-INSERT INTO Node VALUES (1, "CHAPTER", "Chapter 1", 1);
-INSERT INTO Node VALUES (2, "CHAPTER", "Chapter 2", 2);
-INSERT INTO Node VALUES (3, "SECTION", "Section 2.1", 3);
+INSERT INTO Node VALUES (1, "CHAPTER", "Chapter 1", 1,1, 1);
+INSERT INTO Node VALUES (2, "CHAPTER", "Chapter 2", 1,2, 2);
+INSERT INTO Node VALUES (3, "SECTION", "Section 2.1", 2,2, 3);
 
 INSERT INTO GraphOfContent_Node VALUES (1, 1);
 INSERT INTO GraphOfContent_Node VALUES (1, 2);

@@ -4,7 +4,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.ejb.Stateless;
-import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
@@ -14,6 +13,7 @@ import com.towels.graphofcontent.data.User;
 public class UserDAO {
 	
 	private static Logger logger = Logger.getLogger(UserDAO.class.getCanonicalName());
+	
 	@PersistenceContext
 	private EntityManager em;
 	
@@ -49,7 +49,7 @@ public class UserDAO {
 				.setParameter("id", id)
 				.getSingleResult();
 	}
-
+	
 	public User findUserByEmailAndPassword(String email, String password) {
 		try {
 			return (User) em
@@ -67,7 +67,7 @@ public class UserDAO {
 		try {
 			return (User) em
 					.createQuery(
-							"SELECT user FROM User user LEFT JOIN FETCH Token token WHERE user.token.uuid = :token")
+							"SELECT user FROM User user LEFT JOIN user.token WHERE user.token.uuid = :token")
 					.setParameter("token", token)
 					.getSingleResult();
 		} catch(NoResultException e) {

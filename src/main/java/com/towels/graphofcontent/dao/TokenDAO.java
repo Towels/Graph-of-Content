@@ -4,6 +4,8 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceUnit;
+import javax.transaction.Transactional;
 
 import com.towels.graphofcontent.data.Token;
 
@@ -29,7 +31,7 @@ public class TokenDAO {
 		try{
 		return (Token) em
 				.createQuery(
-						"SELECT Token FROM Token token WHERE token.uuid = :id")
+						"SELECT token FROM Token token WHERE token.uuid = :id")
 				.setParameter("id", id)
 				.getSingleResult();
 		} catch (NoResultException e) {

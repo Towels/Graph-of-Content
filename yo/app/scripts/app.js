@@ -54,6 +54,14 @@ angular
         templateUrl: 'views/file.html',
         controller: 'FileCtrl'
       })
+      .when('/graph', {
+        templateUrl: 'views/graph.html',
+        controller: 'GraphCtrl'
+      })
+      .when('/editor', {
+        templateUrl: 'views/graphEditor.html',
+        controller: 'EditorCtrl'
+      })
       .otherwise({
         redirectTo: '/404.html'
       });

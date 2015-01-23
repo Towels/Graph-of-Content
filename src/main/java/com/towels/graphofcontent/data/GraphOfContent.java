@@ -1,5 +1,6 @@
 package com.towels.graphofcontent.data;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -18,7 +19,10 @@ import com.towels.graphofcontent.exceptions.NodeNotFoundGraphException;
 
 @Entity
 @Table(name="GraphOfContent")
-public class GraphOfContent {
+public class GraphOfContent implements Serializable {
+
+	private static final long serialVersionUID = 403156608270084939L;
+
 	private static final String NULL_VERTEX = "Null-Vertex not allowed.";
 	
 	@Id
@@ -106,12 +110,16 @@ public class GraphOfContent {
 		}
 	}
 
-	public boolean removeAllEdges(Collection<? extends DirectedEdge> edges) {
-		return edges.removeAll(edges);
+	public boolean removeAllEdges(Collection<? extends DirectedEdge> c) {
+		return this.edges.removeAll(c);
 	}
 
-	public boolean removeAllVertices(Collection<? extends Node> vertices) {
-		return vertices.removeAll(vertices);
+	public boolean removeAllVertices(Collection<? extends Node> c) {
+		boolean changed = false;
+		for(Node v : c){
+			changed |= removeVertex(v);
+		}
+		return changed;
 	}
 
 	public DirectedEdge removeEdge(Node sourceVertex, Node targetVertex) {
@@ -132,7 +140,14 @@ public class GraphOfContent {
 	}
 
 	public boolean removeVertex(Node v) {
-		return vertices.remove(v);
+		if(containsVertex(v)){
+			removeAllEdges(outgoingEdgesOf(v));
+			removeAllEdges(incomingEdgesOf(v));
+			vertices.remove(v);
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	public Set<Node> getVertices() {

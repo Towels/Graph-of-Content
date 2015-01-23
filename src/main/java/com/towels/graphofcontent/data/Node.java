@@ -1,5 +1,10 @@
 package com.towels.graphofcontent.data;
 
+import java.io.Serializable;
+import java.util.List;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -8,25 +13,48 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import com.towels.graphofcontent.util.NodeType;
 
 @Entity
 @Table(name="Node")
-public class Node {
+public class Node implements Serializable{
 
+	private static final long serialVersionUID = -2799578774854141849L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@Column(name = "title")
+	@Column
 	private String title;
+	@Column
+	@NotNull
+	private int x;
+	@Column 
+	@NotNull
+	private int y;
+	
+	
+	/*
+	 * DO NOT USE! Only for Cascading issues. Use Graph-Method outgoindEdgesOf() instead.
+	 */
+	@OneToMany(mappedBy="source", cascade=CascadeType.REMOVE)
+	private Set<DirectedEdge> outgoing;
+	/*
+	 * DO NOT USE! Only for Cascading issues. Use Graph-Method incomingEdgesOf() instead.
+	 */
+	@OneToMany(mappedBy="target", cascade=CascadeType.REMOVE)
+	private Set<DirectedEdge> incoming; 
 
 	@ManyToOne
 	private FileObject file;
 	
 	@Column(name="nodetype")
 	@Enumerated(EnumType.STRING)
+	@NotNull
 	private NodeType nodetype;
 	
 	public Long getId() {
@@ -62,6 +90,22 @@ public class Node {
 	public void setNodetype(NodeType nodetype) {
 		this.nodetype = nodetype;
 	}
+	
+	public int getX() {
+		return x;
+	}
+
+	public void setX(int x) {
+		this.x = x;
+	}
+
+	public int getY() {
+		return y;
+	}
+
+	public void setY(int y) {
+		this.y = y;
+	}
 
 	/**
 	 * Special implementation of the equals method due to some issues with lazy
@@ -92,7 +136,7 @@ public class Node {
 	 **/
 	@Override
 	public int hashCode() {
-		int hash = this.getId().hashCode();
+		int hash = (this.getId() == null ? 0 : this.getId().hashCode());
 		return hash;
 	}
 }

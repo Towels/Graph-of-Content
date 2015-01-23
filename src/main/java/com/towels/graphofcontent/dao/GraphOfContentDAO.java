@@ -34,7 +34,7 @@ public class GraphOfContentDAO {
 	
 	//User Defined Query
 	public GraphOfContent findGraphOfContentById(Long id) {
-		return (GraphOfContent) em
+		return (GraphOfContent) em //TODO Make safe for NoResultException
 				.createQuery(
 						"SELECT graph FROM GraphOfContent graph WHERE graph.id = :id")
 				.setParameter("id", id)
@@ -45,7 +45,7 @@ public class GraphOfContentDAO {
 		try{
 			return (GraphOfContent) em
 					.createQuery(
-							"SELECT lecture.graph FROM Lecture lecture INNER JOIN FETCH GraphOfContent graph WHERE lecture.id = :id")
+							"SELECT lecture.graph FROM Lecture lecture INNER JOIN lecture.graph WHERE lecture.id = :id")
 					.setParameter("id", lectureID)
 					.getSingleResult();
 		} catch(NoResultException e) {

@@ -1,9 +1,9 @@
 package com.towels.graphofcontent.data;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Set;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,7 +23,11 @@ import com.towels.graphofcontent.util.VisibilityType;
 
 @Entity
 @Table(name="Lecture")
-public class Lecture {
+public class Lecture implements Serializable{
+
+
+	private static final long serialVersionUID = -1486316825821249058L;
+	
 
 	public Lecture(){
 		this.moderators = new HashSet<User>();
@@ -45,6 +49,7 @@ public class Lecture {
 		
 		if(this.dateCreated == null) this.dateCreated = new Timestamp(System.currentTimeMillis());
 	}
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;

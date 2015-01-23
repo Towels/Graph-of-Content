@@ -31,8 +31,16 @@ angular
         controller: 'UserCtrl'
       })
       .when('/lecture', {
+        templateUrl: 'views/lectures.html',
+        controller: 'AllLecturesCtrl'
+      })
+      .when('/lecture/id-:id', {
         templateUrl: 'views/lecture.html',
         controller: 'LectureCtrl'
+      })
+      .when('/lecture/new', {
+        templateUrl: 'views/createLecture.html',
+        controller: 'CreateLectureCtrl'
       })
       .when('/file', {
         templateUrl: 'views/file.html',

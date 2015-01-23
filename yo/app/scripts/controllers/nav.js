@@ -14,11 +14,11 @@ angular.module('graphOfContentApp')
   $scope.site = site;
   site.updateSite('Graph of Content', 'A spectacular Web app');
   
-  $scope.loggedIn;
+  //$scope.loggedIn;
   
   $scope.$watch(function() {
 	  return authSrv.loggedIn;
-  },function(newValue, oldValue) {
+  },function(newValue) {
 	  $scope.loggedIn = newValue;
   });
   

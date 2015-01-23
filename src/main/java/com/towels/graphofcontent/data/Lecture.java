@@ -1,27 +1,51 @@
 package com.towels.graphofcontent.data;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.Set;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import com.towels.graphofcontent.dto.LectureDTO;
+import com.towels.graphofcontent.util.VisibilityType;
 
 @Entity
 @Table(name="Lecture")
 public class Lecture implements Serializable{
 
+
 	private static final long serialVersionUID = -1486316825821249058L;
+	
+
+	public Lecture(){}
+	public Lecture(LectureDTO dto){
+		this.id = dto.id;
+		this.name = dto.name;
+		this.professor = dto.professor;
+		this.university = dto.university;
+		//TODO tidy up
+		try{
+			this.visibility = VisibilityType.valueOf(dto.visibility);
+		}
+		catch(NullPointerException e){
+			this.visibility = null;
+		}
+		this.dateCreated = dto.dateCreated;
+		this.lastModified = dto.lastModified;
+		
+		if(this.dateCreated == null) this.dateCreated = new Timestamp(System.currentTimeMillis());
+	}
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,11 +57,12 @@ public class Lecture implements Serializable{
 	@Column(name="professor")
 	private String professor;
 	@Column(name="dateCreated")
-	private Date dateCreated;
+	private Timestamp dateCreated;
 	@Column(name="lastModified")
-	private Date lastModified;
-	@Column(name="rights")
-	private int rights;
+	private Timestamp lastModified;
+	@Column(name="visibility")
+	@Enumerated(EnumType.STRING)
+	private VisibilityType visibility;
 	
 	@ManyToMany(fetch=FetchType.LAZY)
 	private Set<User> moderators;
@@ -59,64 +84,42 @@ public class Lecture implements Serializable{
 		return this.name;
 	}
 	
-	//TODO regex for invalid chars
-	public boolean setName(String name){
-		if(true){
-			this.name = name;
-			this.lastModified = new Date(System.currentTimeMillis());
-			return true;
-		}
-		else return false;
+	public void setName(String name){
+		this.name = name;
+		this.lastModified = new Timestamp(System.currentTimeMillis());
 	}
 		
 	public String getUniversity(){
 		return this.university;
 	}
-	//TODO check name if valid
-	public boolean setUniversity(String university){
-		if(true){
-			this.university = university;
-			this.lastModified = new Date(System.currentTimeMillis());
-			return true;
-		}
-		else return false;
+	public void setUniversity(String university){
+		this.university = university;
+		this.lastModified = new Timestamp(System.currentTimeMillis());
 	}
 	
 	public String getProfessor() {
 		return professor;
 	}
-	//TODO check name if valid
-	public boolean setProfessor(String professor){
-		if(true){
-			this.professor = professor;
-			this.lastModified = new Date(System.currentTimeMillis());
-			return true;
-		}
-		else return false;
+	
+	public void setProfessor(String professor){
+		this.professor = professor;
+		this.lastModified = new Timestamp(System.currentTimeMillis());
 	}
 	
-	public Date getDateCreated(){
+	public Timestamp getDateCreated(){
 		return this.dateCreated;
 	}
 	
-	public void setDateCreated(Date dateCreated) {
+	public void setDateCreated(Timestamp dateCreated) {
 		this.dateCreated = dateCreated;
 	}
 	
-	public Date getLastModified(){
+	public Timestamp getLastModified(){
 		return this.lastModified;
 	}
 
-	public void setLastModified(Date lastModified) {
+	public void setLastModified(Timestamp lastModified) {
 		this.lastModified = lastModified;
-	}
-	
-	public int getRights(){
-		return this.rights;
-	}
-	
-	public void setRights(int rights){
-		this.rights = rights;
 	}
 	
 	public Set<User> getModerators(){
@@ -127,18 +130,20 @@ public class Lecture implements Serializable{
 		this.moderators = moderators;
 	}
 	
+	public void addModerator(User moderator){
+		this.moderators.add(moderator);
+	}
+	
+	public void removeModerator(User moderator){
+		this.moderators.remove(moderator);
+	}
+	
 	public User getOwner(){
 		return this.owner;
 	}
 	
-	public boolean setOwner(User owner){
-		if(this.owner != null){
-			return false;
-		}
-		else{
-			this.owner = owner;
-			return true;
-		}
+	public void setOwner(User owner){
+		this.owner = owner;
 	}
 
 	public GraphOfContent getGraph() {
@@ -149,5 +154,12 @@ public class Lecture implements Serializable{
 		this.graph = graph;
 	}
 	
+	public VisibilityType getVisibility(){
+		return this.visibility;
+	}
+	
+	public void setVisibility(VisibilityType visibility){
+		this.visibility = visibility;
+	}
 
 }

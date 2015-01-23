@@ -9,7 +9,6 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 
 import com.towels.graphofcontent.data.GraphOfContent;
-import com.towels.graphofcontent.data.Lecture;
 
 @Stateless
 public class GraphOfContentDAO {

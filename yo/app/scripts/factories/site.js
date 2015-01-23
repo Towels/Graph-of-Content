@@ -45,4 +45,4 @@ angular.module('graphOfContentApp')
 .constant('graphURL', 'http://localhost:8080/angular/resources/goc')
 .constant('userURL', 'http://localhost:8080/resources/user')
 .constant('fileURL', 'http://localhost:8080/resources/file')
-.constant('lectureURL', 'http://localhost:8080/resources/lecture');
+.constant('lectureURL', 'http://localhost:8080/angular/resources/lecture');

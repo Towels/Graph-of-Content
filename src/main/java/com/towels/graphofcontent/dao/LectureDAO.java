@@ -1,11 +1,13 @@
 package com.towels.graphofcontent.dao;
 
+import java.util.List;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import com.towels.graphofcontent.data.Lecture;
-import com.towels.graphofcontent.data.Node;
+import com.towels.graphofcontent.util.VisibilityType;
 
 @Stateless
 public class LectureDAO {
@@ -13,8 +15,10 @@ public class LectureDAO {
 	private EntityManager em;
 	
 	//Create new User
-	public void store(Lecture lecture) {
+	public Lecture store(Lecture lecture) {
 		em.persist(lecture);
+		em.flush();
+		return lecture;
 	}
 	
 	//Merge the user Object to the one with the same ID;
@@ -29,10 +33,17 @@ public class LectureDAO {
 	
 	//User Defined Query
 	public Lecture findLectureById(Long id) {
-		return (Lecture) em
-				.createQuery(
-						"SELECT lecture FROM Lecture lecture WHERE lecture.id = :id")
-				.setParameter("id", id)
-				.getSingleResult();
+		return em.find(Lecture.class, id);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Lecture> findAllLectures() {
+		 return em.createQuery("SELECT e FROM Lecture e").getResultList();
+	}
+	
+	public List<Lecture> findPublicLectures() {
+		return em.createQuery("Select e FROM Lecture e WHERE e.visibility = :visibility")
+				.setParameter("visibility", VisibilityType.PUBLIC)
+				.getResultList();
 	}
 }

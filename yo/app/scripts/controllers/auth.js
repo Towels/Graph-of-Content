@@ -13,8 +13,10 @@ angular.module('graphOfContentApp')
 .controller('LogonCtrl', function($scope, $http, $location, authURL, authSrv){
 	
 	$scope.credentials = {
-		email: '',
-		password: ''
+		//TODO empty this
+		//SECURITY password is stored in plaintext during runtime (it also is plaintext in DB)
+		email: 'test@mail.xyz',
+		password: 'angular'
 	};
 	
 	$scope.$watch(function() {
@@ -22,8 +24,6 @@ angular.module('graphOfContentApp')
 	}, function(newValue){
 		$scope.loggedIn = newValue;
 	});
-	
-	$scope.message = '';
 	
 	$scope.login = function(){
 		$http.post(authURL+'/login', $scope.credentials).then(function(response) {
@@ -41,12 +41,12 @@ angular.module('graphOfContentApp')
 	
 	$scope.logout = function() {
 		$http.post(authURL+'/logout', authSrv.user).then(
-			function(response) {
+			function() {
 				authSrv.setLoggedIn(false);
 				authSrv.setEmail('');
 				authSrv.setUuid('');
 			},
-			function(response){
+			function(){
 				console.log('logout-Fehler');
 			});
 		

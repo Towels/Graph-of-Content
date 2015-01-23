@@ -4,7 +4,10 @@ INSERT INTO User VALUES (1, NOW(), "test@mail.xyz", NOW(), "TestUser", "angular"
 INSERT INTO User VALUES (2, NOW(), "test", NOW(), "TestUser", "angular", NOW(), NULL);	
 
 INSERT INTO GraphOfContent VALUES (1);
-INSERT INTO Lecture VALUES (1, NOW(), NOW(), "TowelsRule", "Prof. Dr. Washcloth", 100, "Bathroom University", 1, 1);
+INSERT INTO Lecture VALUES (1, NOW(), NOW(), "TowelsRule", "Prof. Dr. Washcloth", "Bathroom University", "PUBLIC", 1, 1);
+INSERT INTO Lecture VALUES (2, NOW(), NOW(), "Do not forget to bring your Towel", "M. Sc. Towely", "Restroom University", "PRIVATE", 1, 1);
+INSERT INTO Lecture VALUES (3, NOW(), NOW(), "Washing Stuff", "Grandma Towels", "Home for the Elderly", "PUBLIC", 1, 1);
+
 
 INSERT INTO FileObject VALUES (1, NOW(), NOW(), "File 1", NULL, "BIN", "F1", 1);
 INSERT INTO FileObject VALUES (2, NOW(), NOW(), "File 1", NULL, "BIN", "F1", 1);

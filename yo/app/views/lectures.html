@@ -1,0 +1,8 @@
+Your Lectures
+<md-list>
+<md-item ng-repeat="lecture in lectures">
+<md-item-content>
+{{lecture.name}} by {{lecture.professor}} at {{lecture.university}} <a ng-href="#/lecture/id-{{lecture.id}}"> Link</a>
+</md-item-content>
+</md-item>
+</md-list>

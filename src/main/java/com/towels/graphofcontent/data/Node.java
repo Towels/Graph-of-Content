@@ -2,7 +2,9 @@ package com.towels.graphofcontent.data;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -11,6 +13,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -25,7 +28,7 @@ public class Node implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@Column(name = "title")
+	@Column
 	private String title;
 	@Column
 	@NotNull
@@ -33,6 +36,14 @@ public class Node implements Serializable{
 	@Column 
 	@NotNull
 	private int y;
+	
+	
+	//DO NOT USE! Only for Cascading issues.
+	@OneToMany(mappedBy="source", cascade=CascadeType.REMOVE)
+	private Set<DirectedEdge> outgoing;
+	//DO NOT USE! Only for Cascading issues.
+	@OneToMany(mappedBy="target", cascade=CascadeType.REMOVE)
+	private Set<DirectedEdge> incoming; 
 
 	@ManyToOne
 	private FileObject file;

@@ -24,7 +24,7 @@ import com.towels.graphofcontent.util.NodeType;
 
 @Stateless(name="GraphService")
 public class GraphServiceBean {
-	Logger logger = Logger.getLogger(GraphServiceBean.class.getCanonicalName());
+	private static Logger logger = Logger.getLogger(GraphServiceBean.class.getCanonicalName());
 	@EJB 
 	private LectureDAO lectureDAO;
 	
@@ -127,8 +127,9 @@ public class GraphServiceBean {
 			}
 		}
 		if(node != null ) {
-			logger.log(Level.INFO, "OUT:" +goc.inDegreeOf(node) + "IN: " + goc.outDegreeOf(node));
 			goc.removeVertex(node);
+			graphDAO.update(goc);
+			nodeDAO.delete(node);
 			return true;
 		} else {
 			return false;
@@ -215,6 +216,7 @@ public class GraphServiceBean {
 		}
 		if(edge != null ) {
 			goc.removeEdge(edge);
+			graphDAO.update(goc);
 			return true;
 		} else {
 			return false;

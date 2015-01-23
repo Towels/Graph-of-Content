@@ -2,29 +2,38 @@ package com.towels.graphofcontent.data;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.IdClass;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.Generated;
+import org.hibernate.annotations.GenerationTime;
+
+@IdClass(DirectedEdgePK.class)
 @Entity
 @Table(name = "DirectedEdge")
 public class DirectedEdge implements Serializable {
+	
 	private static final long serialVersionUID = 974070733395165762L;
-
+	
+	@Generated(GenerationTime.INSERT)
+	@Column(name="id", insertable=false, unique=true)
+	private Long id;
+	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long Id;
-
 	@ManyToOne(fetch = FetchType.EAGER)
-	@NotNull
 	private Node source;
+	@Id
 	@ManyToOne(fetch = FetchType.EAGER)
-	@NotNull
 	private Node target;
 
 	public DirectedEdge() {
@@ -39,15 +48,15 @@ public class DirectedEdge implements Serializable {
 			throw new NullPointerException();
 		}
 	}
-
+	
 	public Long getId() {
-		return Id;
+		return id;
 	}
 
 	public void setId(Long id) {
-		Id = id;
+		this.id = id;
 	}
-
+	
 	public Node getSource() {
 		return source;
 	}
@@ -75,17 +84,10 @@ public class DirectedEdge implements Serializable {
 			return true;
 		}
 		if (object instanceof DirectedEdge) {
-			if (this.getId() != null && this.getId() != 0
-					&& ((DirectedEdge) object).getId() != null
-					&& ((DirectedEdge) object).getId() != 0
-					&& this.getId() == ((DirectedEdge) object).getId()) {
-				return true;
-			} else {
-				return this.getSource().equals(
-						((DirectedEdge) object).getSource())
-						&& this.getTarget().equals(
-								((DirectedEdge) object).getTarget());
-			}
+			return this.getSource().equals(
+					((DirectedEdge) object).getSource())
+					&& this.getTarget().equals(
+							((DirectedEdge) object).getTarget());
 
 		} else {
 			return false;
@@ -100,16 +102,23 @@ public class DirectedEdge implements Serializable {
 	@Override
 	public int hashCode() {
 		int hash = 0;
-		if(this.getId() != null) {
-			hash = this.getId().hashCode();
-		} else {
-			if (this.getSource() != null) {
-				hash += this.getSource().hashCode() * 31;
-				if (this.getTarget() != null) {
-					hash += this.getTarget().hashCode();
-				}
+		if (this.getSource() != null) {
+			hash += this.getSource().hashCode() * 31;
+			if (this.getTarget() != null) {
+				hash += this.getTarget().hashCode();
 			}
 		}
 		return hash;
 	}
+	
+	@Override
+	public String toString() {
+		return "{source: "+this.getSource().getId() + ", target: " + this.getTarget().getId()+ ", hash: " + hashCode() +"}";
+	}
+}
+
+class DirectedEdgePK implements Serializable {
+	private Long source;
+	private Long target;
+	
 }

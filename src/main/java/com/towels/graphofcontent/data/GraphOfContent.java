@@ -110,13 +110,13 @@ public class GraphOfContent implements Serializable {
 		}
 	}
 
-	public boolean removeAllEdges(Collection<? extends DirectedEdge> edges) {
-		return edges.removeAll(edges);
+	public boolean removeAllEdges(Collection<? extends DirectedEdge> c) {
+		return this.edges.removeAll(c);
 	}
 
-	public boolean removeAllVertices(Collection<? extends Node> vertices) {
+	public boolean removeAllVertices(Collection<? extends Node> c) {
 		boolean changed = false;
-		for(Node v : vertices){
+		for(Node v : c){
 			changed |= removeVertex(v);
 		}
 		return changed;

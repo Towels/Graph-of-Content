@@ -38,10 +38,14 @@ public class Node implements Serializable{
 	private int y;
 	
 	
-	//DO NOT USE! Only for Cascading issues.
+	/*
+	 * DO NOT USE! Only for Cascading issues. Use Graph-Method outgoindEdgesOf() instead.
+	 */
 	@OneToMany(mappedBy="source", cascade=CascadeType.REMOVE)
 	private Set<DirectedEdge> outgoing;
-	//DO NOT USE! Only for Cascading issues.
+	/*
+	 * DO NOT USE! Only for Cascading issues. Use Graph-Method incomingEdgesOf() instead.
+	 */
 	@OneToMany(mappedBy="target", cascade=CascadeType.REMOVE)
 	private Set<DirectedEdge> incoming; 
 

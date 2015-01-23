@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
@@ -18,22 +19,24 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.Generated;
 import org.hibernate.annotations.GenerationTime;
 
-@IdClass(DirectedEdgePK.class)
+
 @Entity
-@Table(name = "DirectedEdge")
+@Table(name = "DirectedEdge", uniqueConstraints=
+@UniqueConstraint(columnNames={"source", "target"}))
 public class DirectedEdge implements Serializable {
 	
 	private static final long serialVersionUID = 974070733395165762L;
 	
-	@Generated(GenerationTime.INSERT)
-	@Column(name="id", insertable=false, unique=true)
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
-	@Id
 	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="source")
 	private Node source;
-	@Id
+	
 	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="target")
 	private Node target;
 
 	public DirectedEdge() {

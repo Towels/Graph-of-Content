@@ -24,5 +24,5 @@ INSERT INTO GraphOfContent_Node VALUES (1, 3);
 INSERT INTO DirectedEdge VALUES (1, 1, 2);
 INSERT INTO DirectedEdge VALUES (2, 2, 3);
 
-INSERT INTO GraphOfContent_DirectedEdge VALUES (1, 1, 2);
-INSERT INTO GraphOfContent_DirectedEdge VALUES (1, 2, 3);
+INSERT INTO GraphOfContent_DirectedEdge VALUES (1, 1);
+INSERT INTO GraphOfContent_DirectedEdge VALUES (1, 2);

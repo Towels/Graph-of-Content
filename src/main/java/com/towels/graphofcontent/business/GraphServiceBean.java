@@ -11,6 +11,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EnumType;
 import javax.persistence.PersistenceContext;
 
+import com.towels.graphofcontent.dao.DirectedEdgeDAO;
 import com.towels.graphofcontent.dao.GraphOfContentDAO;
 import com.towels.graphofcontent.dao.LectureDAO;
 import com.towels.graphofcontent.dao.NodeDAO;
@@ -33,6 +34,9 @@ public class GraphServiceBean {
 	
 	@EJB 
 	private NodeDAO nodeDAO;
+	
+	@EJB
+	private DirectedEdgeDAO edgeDAO;
 	
 	@PersistenceContext
 	EntityManager em;
@@ -217,6 +221,7 @@ public class GraphServiceBean {
 		if(edge != null ) {
 			goc.removeEdge(edge);
 			graphDAO.update(goc);
+			edgeDAO.delete(edge);
 			return true;
 		} else {
 			return false;
@@ -250,7 +255,7 @@ public class GraphServiceBean {
 		NodeDTO nodeDTO = new NodeDTO();
 		nodeDTO.id = node.getId().toString();
 		nodeDTO.label = node.getTitle();
-		nodeDTO.x = node.getX(); //TODO Where does the coordinates came from?
+		nodeDTO.x = node.getX(); 
 		nodeDTO.y = node.getY();
 		nodeDTO.type = node.getNodetype().name();
 		return nodeDTO;

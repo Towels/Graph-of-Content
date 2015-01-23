@@ -1,18 +1,10 @@
 package com.towels.graphofcontent.rest;
 
-import java.util.HashSet;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
-import javax.annotation.security.PermitAll;
-import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -22,16 +14,13 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.NewCookie;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
+import javax.ws.rs.core.Response.StatusType;
 
-import com.towels.graphofcontent.business.AuthServiceBean;
 import com.towels.graphofcontent.business.GraphServiceBean;
-import com.towels.graphofcontent.dao.UserDAO;
-import com.towels.graphofcontent.dto.AuthAccessElementDTO;
-import com.towels.graphofcontent.dto.AuthLoginElementDTO;
-import com.towels.graphofcontent.dto.AuthLogoutElementDTO;
 import com.towels.graphofcontent.dto.EdgeDTO;
 import com.towels.graphofcontent.dto.GraphDTO;
 import com.towels.graphofcontent.dto.NodeDTO;
@@ -49,8 +38,13 @@ public class GraphResource {
     
     @GET
     @UserAuthorization
-    public GraphDTO getGraph(@Context HttpServletRequest request, @PathParam("lectureID") Long lectureID) {
-        return graphService.getGraph(lectureID);
+    public Response getGraph(@Context HttpServletRequest request, @PathParam("lectureID") Long lectureID) {
+    	GraphDTO graphDTO = graphService.getGraph(lectureID);
+    	if(graphDTO != null){
+    		return Response.ok(graphDTO).build();
+    	} else {
+    		return Response.status(Status.NOT_FOUND).build();
+    	}
     }
     
     /*
@@ -59,8 +53,14 @@ public class GraphResource {
     @GET
     @Path("node")
     @UserAuthorization
-    public Set<NodeDTO> getNodeList(@Context HttpServletRequest request, @PathParam("lectureID") Long lectureID) {
-    	return new HashSet<NodeDTO>(); //TODO
+    public Response getNodeList(@Context HttpServletRequest request, @PathParam("lectureID") Long lectureID) {
+    	Set<NodeDTO> nodeDTOs = graphService.getNodeList(lectureID);
+    	if(nodeDTOs != null ){
+    		GenericEntity<Set<NodeDTO>> entity = new GenericEntity<Set<NodeDTO>>(nodeDTOs){}; //Wrap Collection Class in Generic Entity
+    		return Response.ok(entity).build();
+    	}else {
+    		return Response.status(Status.NOT_FOUND).build();
+    	}
     }
     /*
      * Creates a new Node in Graph.
@@ -71,10 +71,10 @@ public class GraphResource {
     public Response addNode(@Context HttpServletRequest request, @PathParam("lectureID") Long lectureID, NodeDTO nodeDTO) {
     	boolean modified = graphService.addNode(lectureID, nodeDTO);
     	if(modified) {
-    		return Response.ok().build();
+    		return Response.status(Status.CREATED).build();
     	}
     	else {
-    		return Response.notModified().build();
+    		return Response.status(Status.CONFLICT).build();
     	}
     }
     /*
@@ -83,17 +83,28 @@ public class GraphResource {
     @GET
     @Path("node/{id}")
     @UserAuthorization
-    public Set<NodeDTO> getNode(@Context HttpServletRequest request, @PathParam("lectureID") Long lectureID, @PathParam("id") Long nodeID) {
-    	return null; //TODO
+    public Response getNode(@Context HttpServletRequest request, @PathParam("lectureID") Long lectureID, @PathParam("id") Long nodeID) {
+    	NodeDTO nodeDTO = graphService.getNode(lectureID, nodeID);
+    	if(nodeDTO != null){
+    		return Response.ok(nodeDTO).build();
+    	} else {
+    		return Response.status(Status.NOT_FOUND).build();
+    	}
     }
     /*
      * Updates Node in Graph
      */
     @PUT
-    @Path("node")
+    @Path("node/{id}")
     @UserAuthorization
-    public Response updateNode(@Context HttpServletRequest request, @PathParam("lectureID") Long lectureID, NodeDTO nodeDTO) {
-    	return Response.ok().build();
+    public Response updateNode(@Context HttpServletRequest request, @PathParam("lectureID") Long lectureID, @PathParam("id") Long nodeID, NodeDTO nodeDTO) {
+    	boolean modified = graphService.updateNode(lectureID,nodeID, nodeDTO);
+    	if(modified) {
+    		return Response.ok().build();
+    	}
+    	else {
+    		return Response.status(Status.CONFLICT).build();
+    	}
     }
     /*
      * Deletes Node out of Graph.
@@ -102,7 +113,12 @@ public class GraphResource {
     @Path("node/{id}")
     @UserAuthorization
     public Response deleteNode(@Context HttpServletRequest request, @PathParam("lectureID") Long lectureID, @PathParam("id") Long nodeID) {
-    	return Response.ok().build(); //TODO
+    	boolean modified = graphService.deleteNode(lectureID, nodeID);
+    	if(modified){
+    		return Response.ok().build();
+    	} else {
+    		return Response.status(Status.NOT_FOUND).build();
+    	}
     }
     
     /*
@@ -111,8 +127,14 @@ public class GraphResource {
     @GET
     @Path("edge")
     @UserAuthorization
-    public Set<EdgeDTO> getEdgeList(@Context HttpServletRequest request, @PathParam("lectureID") Long lectureID) {
-    	return new HashSet<EdgeDTO>(); //TODO
+    public Response getEdgeList(@Context HttpServletRequest request, @PathParam("lectureID") Long lectureID) {
+    	Set<EdgeDTO> edgeDTOs = graphService.getEdgeList(lectureID);
+    	if(edgeDTOs != null ){
+    		GenericEntity<Set<EdgeDTO>> entity = new GenericEntity<Set<EdgeDTO>>(edgeDTOs){};
+    		return Response.ok(entity).build();
+    	}else {
+    		return Response.status(Status.NOT_FOUND).build();
+    	}
     }
     
    /*
@@ -124,10 +146,10 @@ public class GraphResource {
     public Response addEdge(@Context HttpServletRequest request, @PathParam("lectureID") Long lectureID, EdgeDTO edgeDTO) {
     	boolean modified = graphService.addEdge(lectureID, edgeDTO);
     	if(modified) {
-    		return Response.ok().build();
+    		return Response.status(Status.CREATED).build();
     	}
     	else {
-    		return Response.notModified().build();
+    		return Response.status(Status.CONFLICT).build();
     	}
     }
 	    
@@ -137,18 +159,29 @@ public class GraphResource {
     @GET
     @Path("edge/{id}")
     @UserAuthorization
-    public Set<EdgeDTO> getEdge(@Context HttpServletRequest request, @PathParam("lectureID") Long lectureID, @PathParam("id") Long edgeID) {
-    	return null; //TODO
+    public Response getEdge(@Context HttpServletRequest request, @PathParam("lectureID") Long lectureID, @PathParam("id") Long edgeID) {
+    	EdgeDTO edgeDTO = graphService.getEdge(lectureID, edgeID);
+    	if(edgeDTO != null){
+    		return Response.ok(edgeDTO).build();
+    	} else {
+    		return Response.status(Status.NOT_FOUND).build();
+    	}
     }
     
     /*
      * Updates Edge in Graph
      */
     @PUT
-    @Path("edge")
+    @Path("edge/{id}")
     @UserAuthorization
-    public Response updateEdge(@Context HttpServletRequest request, @PathParam("lectureID") Long lectureID, EdgeDTO edgeDTO) {
-    	return Response.ok().build();
+    public Response updateEdge(@Context HttpServletRequest request, @PathParam("lectureID") Long lectureID, @PathParam("id") Long edgeID, EdgeDTO edgeDTO) {
+    	boolean modified = graphService.updateEdge(lectureID,edgeID, edgeDTO);
+    	if(modified) {
+    		return Response.ok().build();
+    	}
+    	else {
+    		return Response.status(Status.CONFLICT).build();
+    	}
     }
     
     /*
@@ -158,7 +191,12 @@ public class GraphResource {
     @Path("edge/{id}")
     @UserAuthorization
     public Response deleteEdge(@Context HttpServletRequest request, @PathParam("lectureID") Long lectureID, @PathParam("id") Long edgeID) {
-    	return Response.ok().build(); //TODO
+    	boolean modified = graphService.deleteEdge(lectureID, edgeID);
+    	if(modified){
+    		return Response.ok().build();
+    	} else {
+    		return Response.status(Status.NOT_FOUND).build();
+    	}
     }
     
 }

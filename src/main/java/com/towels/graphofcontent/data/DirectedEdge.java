@@ -100,15 +100,16 @@ public class DirectedEdge implements Serializable {
 	@Override
 	public int hashCode() {
 		int hash = 0;
-		if (this.getSource() != null) {
-			hash += this.getSource().hashCode() * 31;
-			if (this.getTarget() != null) {
-				hash += this.getTarget().hashCode();
-			}
+		if(this.getId() != null) {
+			hash = this.getId().hashCode();
 		} else {
-			hash = (this.getId() == null ? 0 : this.getId().hashCode());
+			if (this.getSource() != null) {
+				hash += this.getSource().hashCode() * 31;
+				if (this.getTarget() != null) {
+					hash += this.getTarget().hashCode();
+				}
+			}
 		}
-
 		return hash;
 	}
 }

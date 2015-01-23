@@ -37,10 +37,31 @@ public class GraphServiceBean {
 	@PersistenceContext
 	EntityManager em;
 	
+	/*
+	 * Graph Methods
+	 */
 	public GraphDTO getGraph(Long lectureID) {
 		GraphOfContent goc = graphDAO.findGraphOfContentByLectureID(lectureID);
 		if(goc != null) {
 			return buildGraphDTO(goc);
+		} else {
+			return null;
+		}
+	}
+	
+	/*
+	 * Node Methods
+	 */
+	public Set<NodeDTO> getNodeList(Long lectureID) {
+		GraphOfContent goc = graphDAO.findGraphOfContentByLectureID(lectureID);
+		if(goc != null) {
+			Set<Node> nodes = goc.getVertices();
+			Set<NodeDTO> nodeDTOs = new HashSet<NodeDTO>();
+			for(Node node : nodes){
+				NodeDTO nodeDTO = buildNodeDTO(node);
+				nodeDTOs.add(nodeDTO);
+			}	
+			return nodeDTOs;
 		} else {
 			return null;
 		}
@@ -58,12 +79,142 @@ public class GraphServiceBean {
 		}
 	}
 	
+	public NodeDTO getNode(Long lectureID, Long nodeID){
+		GraphOfContent goc = graphDAO.findGraphOfContentByLectureID(lectureID);
+		Set<Node> nodes = goc.getVertices();
+		for(Node node : nodes){
+			if(node.getId() == nodeID) {
+				NodeDTO nodeDTO = buildNodeDTO(node);
+				return nodeDTO;
+			}
+		}
+		return null;
+	}
+	public boolean updateNode(Long lectureID, Long nodeID, NodeDTO nodeDTO) {
+		GraphOfContent goc = graphDAO.findGraphOfContentByLectureID(lectureID);
+		Node node = parseNodeDTO(nodeDTO);
+		if(node != null) {
+			if(node.getId() == null) {
+				node.setId(nodeID);
+			} 
+			if(node.getId() == nodeID) {
+				if(goc.containsVertex(node)) {
+					goc.removeVertex(node);
+					goc.addVertex(node);
+					graphDAO.update(goc);
+					return true;
+				} else {
+					logger.log(Level.WARNING, "UpdateNode: Node not found!");
+					return false;
+				}
+			}else{
+				logger.log(Level.WARNING, "UpdateNode: ID Inconsitency!");
+				return false;
+			}
+		}else {
+			logger.log(Level.WARNING, "UpdateNode: Wrong DTO Format!");
+			return false;
+		}
+	}
+	public boolean deleteNode(Long lectureID, Long nodeID) {
+		GraphOfContent goc = graphDAO.findGraphOfContentByLectureID(lectureID);
+		Set<Node> nodes = goc.getVertices();
+		Node node = null;
+		for(Node n : nodes){
+			if(n.getId() == nodeID) {
+				node = n;
+				break;
+			}
+		}
+		if(node != null ) {
+			logger.log(Level.INFO, "OUT:" +goc.inDegreeOf(node) + "IN: " + goc.outDegreeOf(node));
+			goc.removeVertex(node);
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	/*
+	 * Edge Methods
+	 */
+	public Set<EdgeDTO> getEdgeList(Long lectureID) {
+		GraphOfContent goc = graphDAO.findGraphOfContentByLectureID(lectureID);
+		if(goc != null) {
+			Set<DirectedEdge> edges = goc.getEdges();
+			Set<EdgeDTO> edgeDTOs = new HashSet<EdgeDTO>();
+			for(DirectedEdge edge : edges){
+				EdgeDTO edgeDTO = buildEdgeDTO(edge);
+				edgeDTOs.add(edgeDTO);
+			}	
+			return edgeDTOs;
+		} else {
+			return null;
+		}
+	}
 	public boolean addEdge(Long lectureID, EdgeDTO edgeDTO){
 		GraphOfContent goc = graphDAO.findGraphOfContentByLectureID(lectureID);
 		DirectedEdge newEdge = parseEdgeDTO(edgeDTO);
 		if(newEdge != null && newEdge.getId() == null) {
 			goc.addEdge(newEdge);
 			graphDAO.update(goc);
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public EdgeDTO getEdge(Long lectureID, Long edgeID){
+		GraphOfContent goc = graphDAO.findGraphOfContentByLectureID(lectureID);
+		Set<DirectedEdge> edges = goc.getEdges();
+		for(DirectedEdge edge : edges){
+			if(edge.getId() == edgeID) {
+				EdgeDTO edgeDTO = buildEdgeDTO(edge);
+				return edgeDTO;
+			}
+		}
+		return null;
+	}
+	
+	public boolean updateEdge(Long lectureID, Long edgeID, EdgeDTO edgeDTO) {
+		GraphOfContent goc = graphDAO.findGraphOfContentByLectureID(lectureID);
+		DirectedEdge edge = parseEdgeDTO(edgeDTO);
+		if(edge != null) {
+			if(edge.getId() == null) {
+				edge.setId(edgeID);
+			} 
+			if(edge.getId() == edgeID) {
+				if(goc.containsEdge(edge)) {
+					goc.removeEdge(edge);
+					goc.addEdge(edge);
+					graphDAO.update(goc);
+					return true;
+				} else {
+					logger.log(Level.WARNING, "UpdateNode: Node not found!");
+					return false;
+				}
+			}else{
+				logger.log(Level.WARNING, "UpdateNode: ID Inconsitency!");
+				return false;
+			}
+		}else {
+			logger.log(Level.WARNING, "UpdateNode: Wrong DTO Format!");
+			return false;
+		}
+	}
+	
+	public boolean deleteEdge(Long lectureID, Long edgeID) {
+		GraphOfContent goc = graphDAO.findGraphOfContentByLectureID(lectureID);
+		Set<DirectedEdge> edges = goc.getEdges();
+		DirectedEdge edge = null;
+		for(DirectedEdge e : edges){
+			if(e.getId() == edgeID) {
+				edge = e;
+				break;
+			}
+		}
+		if(edge != null ) {
+			goc.removeEdge(edge);
 			return true;
 		} else {
 			return false;

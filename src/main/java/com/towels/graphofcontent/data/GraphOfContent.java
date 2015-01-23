@@ -115,7 +115,11 @@ public class GraphOfContent implements Serializable {
 	}
 
 	public boolean removeAllVertices(Collection<? extends Node> vertices) {
-		return vertices.removeAll(vertices);
+		boolean changed = false;
+		for(Node v : vertices){
+			changed |= removeVertex(v);
+		}
+		return changed;
 	}
 
 	public DirectedEdge removeEdge(Node sourceVertex, Node targetVertex) {
@@ -136,7 +140,14 @@ public class GraphOfContent implements Serializable {
 	}
 
 	public boolean removeVertex(Node v) {
-		return vertices.remove(v);
+		if(containsVertex(v)){
+			removeAllEdges(outgoingEdgesOf(v));
+			removeAllEdges(incomingEdgesOf(v));
+			vertices.remove(v);
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	public Set<Node> getVertices() {

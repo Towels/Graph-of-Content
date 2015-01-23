@@ -10,7 +10,7 @@
  */
 
 angular.module('graphOfContentApp')
-.controller('NavCtrl', function($scope, $timeout, $mdSidenav, site, authSrv){
+.controller('NavCtrl', function($scope, $timeout, $mdSidenav, site, authSrv, $location){
   $scope.site = site;
   site.updateSite('Graph of Content', 'A spectacular Web app');
   
@@ -28,6 +28,9 @@ angular.module('graphOfContentApp')
   $scope.close = function() {
     $mdSidenav('left').close();
   };
+  $scope.route = function(url){
+  	$location.path(url);
+  };
 })//TODO move this into proper place
 .directive('resize', function ($window) {
 	return function (scope) {
@@ -37,7 +40,7 @@ angular.module('graphOfContentApp')
 		};
 		scope.$watch(scope.getWindowDimensions, function (newValue) {
 			scope.windowHeight = newValue.h;
-			var viewPadding = 64 + ( 2 * 20 ); // toolbar height + 2* whiteframe padding 
+			var viewPadding = 64; // toolbar height
             var framePadding = viewPadding + ( 2 * 20 ); // additional 2* whiteframe padding
 
             scope.viewStyle = function () {

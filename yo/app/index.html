@@ -33,37 +33,42 @@
       <md-content class="md-padding">
         <section layout="column">
         <!-- TODO: Space content out-->
-          <md-button ng-href="#/" class="md-primary">Home</md-button>
+          <md-button ng-click="route('/')" class="md-primary">Home</md-button>
           <md-divider></md-divider>
-          <md-button ng-href="#/user/{{currentUser.name}}" ng-disabled="!loggedIn" class="md-primary">Profile</md-button>
-          <md-button ng-href="#/file" ng-disabled="!loggedIn" class="md-primary">Files</md-button>
-          <md-button ng-href="#/lecture" ng-disabled="!loggedIn" class="md-primary">Lectures</md-button>
+          <md-button ng-click="route('user/' + currentUser.name" ng-disabled="!loggedIn" class="md-primary">Profile</md-button>
+          <md-button ng-click="route('file')" ng-disabled="!loggedIn" class="md-primary">Files</md-button>
+          <md-button ng-click="route('lecture')" ng-disabled="!loggedIn" class="md-primary">Lectures</md-button>
           <md-divider></md-divider>
-          <br>
-          <md-button ng-click="close()" hide-gt-md class="md-accent">Close Navigation</md-button>
-          <section ng-controller="LogonCtrl">
-	          <form  ng-hide="loggedIn">
-				<md-text-float label="Email Adress" ng-model="credentials.email" placeholder="Email Adress"></md-text-float>
-				<md-text-float label="Password" ng-model="credentials.password" type="password"></md-text-float>
-				<md-button ng-click="login()" class="md-warn">Login</md-button>
-				<span ng-bind="message"></span>
-			  </form>
-			  <md-button ng-click="logout()" ng-show="loggedIn" class="md-warn">Logout</md-button>
-		  </section>
+          <section layout="column" ng-controller="LogonCtrl">
+	          <form  layout="column" ng-hide="loggedIn">
+              <md-input-container>
+                <label>Email Address</label>
+                <input ng-model="credentials.email">
+              </md-input-container>
+              <md-input-container>
+                <label>Password</label>
+                <input ng-model="credentials.password" type="password">
+              </md-input-container>
+      				<md-button ng-click="login()" class="md-warn">Login</md-button>
+      				<span ng-bind="message"></span>
+    			  </form>
+            <md-button ng-click="logout()" ng-show="loggedIn" class="md-warn">Logout</md-button>
+		      </section>
+          <md-divider></md-divider>
+          <md-button ng-click="close()" hide-gt-md>Close Navigation</md-button>
         </section>
       </md-content>
       
     </md-sidenav>
-    <md-content flex role="main">
-      <md-toolbar class="md-theme-indigo" ng-click="toggleLeft()">
+    <md-content flex role="main" class="mainView">
+      <md-toolbar class="md-theme-indigo md-whiteframe-z5" ng-click="toggleLeft()">
         <h1 class="md-toolbar-tools">
           <i class="fa fa-bars" hide-gt-md></i>
+          <div hide-gt-md class="spacer"></div>
           <div ng-bind-html="site.title"></div>
         </h1>
       </md-toolbar>
-      <md-whiteframe class="md-whiteframe-z1 md-padding ng-scope md-default-theme" layout layout-align="center start" ng-style="viewStyle()" resize>
-      <md-content ng-style="frameStyle()" style="width: 80%;" ng-view> </md-content>
-    </md-whiteframe>
+      <md-content class="mainView" ng-style="viewStyle()" ng-view resize></md-content>
     </md-content>
 </section>
 </div>

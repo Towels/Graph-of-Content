@@ -69,6 +69,11 @@ public class GraphResource {
     @Path("node")
     @UserAuthorization
     public NodeDTO addNode(@Context HttpServletRequest request, @PathParam("lectureID") Long lectureID, NodeDTO nodeDTO) {
+    	NodeDTO entry = graphService.addNode(lectureID, nodeDTO);
+    	if(entry != null) {
+    		return entry;
+    	}
+    	else
     	return null; //TODO
     }
     /*

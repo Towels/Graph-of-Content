@@ -32,13 +32,13 @@ public class GraphServiceBean {
 	public GraphDTO getGraph(Long lectureID) {
 		GraphOfContent goc = graphDAO.findGraphOfContentByLectureID(lectureID);
 		if(goc != null) {
-			return buildDTO(goc);
+			return buildGraphDTO(goc);
 		} else {
 			return null;
 		}
 	}
 	
-	private GraphDTO buildDTO(GraphOfContent goc) {
+	private GraphDTO buildGraphDTO(GraphOfContent goc) {
 		Set<Node> nodes = goc.getVertices();
 		Set<DirectedEdge> edges = goc.getEdges();
 		
@@ -66,6 +66,10 @@ public class GraphServiceBean {
 		}	
 		
 		return graphDTO;
+	}
+	
+	public NodeDTO addNode(Long lectureID, NodeDTO nodeDTO){
+		return null;
 	}
 	
 }

@@ -1,5 +1,6 @@
 package com.towels.graphofcontent.data;
 
+import java.io.Serializable;
 import java.sql.Blob;
 import java.sql.Date;
 import java.util.List;
@@ -20,7 +21,9 @@ import com.towels.graphofcontent.util.FileType;
 
 @Entity
 @Table(name="FileObject")
-public class FileObject {
+public class FileObject implements Serializable{
+
+	private static final long serialVersionUID = -8005122898584153837L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,5 +1,6 @@
 package com.towels.graphofcontent.data;
 
+import java.io.Serializable;
 import java.sql.Date;
 import java.util.Set;
 
@@ -18,8 +19,10 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="Lecture")
-public class Lecture {
+public class Lecture implements Serializable{
 
+	private static final long serialVersionUID = -1486316825821249058L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;

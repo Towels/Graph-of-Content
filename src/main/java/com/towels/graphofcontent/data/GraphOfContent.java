@@ -1,5 +1,6 @@
 package com.towels.graphofcontent.data;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -18,7 +19,10 @@ import com.towels.graphofcontent.exceptions.NodeNotFoundGraphException;
 
 @Entity
 @Table(name="GraphOfContent")
-public class GraphOfContent {
+public class GraphOfContent implements Serializable {
+
+	private static final long serialVersionUID = 403156608270084939L;
+
 	private static final String NULL_VERTEX = "Null-Vertex not allowed.";
 	
 	@Id

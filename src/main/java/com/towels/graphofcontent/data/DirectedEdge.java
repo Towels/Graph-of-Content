@@ -1,5 +1,7 @@
 package com.towels.graphofcontent.data;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -11,7 +13,9 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name="DirectedEdge")
-public class DirectedEdge{
+public class DirectedEdge implements Serializable{
+	private static final long serialVersionUID = 974070733395165762L;
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long Id;

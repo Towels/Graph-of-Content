@@ -46,7 +46,7 @@ public class GraphOfContentDAO {
 		try{
 			return (GraphOfContent) em
 					.createQuery(
-							"SELECT lecture.graph FROM Lecture lecture INNER JOIN FETCH GraphOfContent graph WHERE lecture.id = :id")
+							"SELECT lecture.graph FROM Lecture lecture INNER JOIN lecture.graph WHERE lecture.id = :id")
 					.setParameter("id", lectureID)
 					.getSingleResult();
 		} catch(NoResultException e) {

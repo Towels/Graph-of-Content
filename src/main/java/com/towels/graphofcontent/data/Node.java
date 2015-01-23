@@ -1,10 +1,13 @@
 package com.towels.graphofcontent.data;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -18,8 +21,10 @@ import com.towels.graphofcontent.util.NodeType;
 
 @Entity
 @Table(name="Node")
-public class Node {
+public class Node implements Serializable{
 
+	private static final long serialVersionUID = -2799578774854141849L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -36,6 +41,7 @@ public class Node {
 	private FileObject file;
 	
 	@Column(name="nodetype")
+	@Enumerated(EnumType.STRING)
 	@NotNull
 	private NodeType nodetype;
 	

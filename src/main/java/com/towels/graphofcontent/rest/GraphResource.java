@@ -68,13 +68,14 @@ public class GraphResource {
     @POST
     @Path("node")
     @UserAuthorization
-    public NodeDTO addNode(@Context HttpServletRequest request, @PathParam("lectureID") Long lectureID, NodeDTO nodeDTO) {
-    	NodeDTO entry = graphService.addNode(lectureID, nodeDTO);
-    	if(entry != null) {
-    		return entry;
+    public Response addNode(@Context HttpServletRequest request, @PathParam("lectureID") Long lectureID, NodeDTO nodeDTO) {
+    	boolean modified = graphService.addNode(lectureID, nodeDTO);
+    	if(modified) {
+    		return Response.ok().build();
     	}
-    	else
-    	return null; //TODO
+    	else {
+    		return Response.notModified().build();
+    	}
     }
     /*
 	 * Returns Node with Entity-ID :id in Graph.
@@ -120,8 +121,14 @@ public class GraphResource {
     @POST
     @Path("edge")
     @UserAuthorization
-    public EdgeDTO addEdge(@Context HttpServletRequest request, @PathParam("lectureID") Long lectureID, EdgeDTO edgeDTO) {
-    	return null; //TODO
+    public Response addEdge(@Context HttpServletRequest request, @PathParam("lectureID") Long lectureID, EdgeDTO edgeDTO) {
+    	boolean modified = graphService.addEdge(lectureID, edgeDTO);
+    	if(modified) {
+    		return Response.ok().build();
+    	}
+    	else {
+    		return Response.notModified().build();
+    	}
     }
 	    
 	/*

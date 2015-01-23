@@ -121,7 +121,7 @@ public class Node implements Serializable{
 	 **/
 	@Override
 	public int hashCode() {
-		int hash = this.getId().hashCode();
+		int hash = (this.getId() == null ? 0 : this.getId().hashCode());
 		return hash;
 	}
 }

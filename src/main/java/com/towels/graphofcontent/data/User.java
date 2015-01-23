@@ -1,5 +1,6 @@
 package com.towels.graphofcontent.data;
 
+import java.io.Serializable;
 import java.sql.Date;
 import java.util.Set;
 import java.util.UUID;
@@ -21,8 +22,10 @@ import javax.persistence.UniqueConstraint;
 @Entity
 @Table(name="User", 
 		uniqueConstraints=@UniqueConstraint(columnNames={"email"}))
-public class User {
+public class User implements Serializable {
 
+	private static final long serialVersionUID = -1548012998796370494L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;

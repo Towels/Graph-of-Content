@@ -34,7 +34,7 @@ public class GraphOfContentDAO {
 	
 	//User Defined Query
 	public GraphOfContent findGraphOfContentById(Long id) {
-		return (GraphOfContent) em
+		return (GraphOfContent) em //TODO Make safe for NoResultException
 				.createQuery(
 						"SELECT graph FROM GraphOfContent graph WHERE graph.id = :id")
 				.setParameter("id", id)

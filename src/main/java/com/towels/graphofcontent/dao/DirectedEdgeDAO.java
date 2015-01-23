@@ -29,7 +29,7 @@ public class DirectedEdgeDAO {
 	
 	//User Defined Query
 	public Node findNodeById(Long id) {
-		return (Node) em
+		return (Node) em //TODO Make safe for NoResultException
 				.createQuery(
 						"SELECT edge FROM DirectedEdge edge WHERE node.id = :id")
 				.setParameter("id", id)

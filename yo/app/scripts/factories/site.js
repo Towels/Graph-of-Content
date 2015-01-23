@@ -40,9 +40,9 @@ angular.module('graphOfContentApp')
     };
     return auth;
 })
-.constant('rootURL', 'http://192.168.178.41/resources')
-.constant('authURL', 'http://192.168.178.41/resources/auth')
-.constant('graphURL', 'http://192.168.178.41/resources/goc')
-.constant('userURL', 'http://192.168.178.41/resources/user')
-.constant('fileURL', 'http://192.168.178.41/resources/file')
-.constant('lectureURL', 'http://192.168.178.41/resources/lecture');
+.constant('rootURL', 'http://localhost:8080/angular/resources')
+.constant('authURL', 'http://localhost:8080/angular/resources/auth')
+.constant('graphURL', 'http://localhost:8080/angular/resources/goc')
+.constant('userURL', 'http://localhost:8080/angular/resources/user')
+.constant('fileURL', 'http://localhost:8080/angular/resources/file')
+.constant('lectureURL', 'http://localhost:8080/angular/resources/lecture');

@@ -1,8 +1,26 @@
-Your Lectures
-<md-list>
-<md-item ng-repeat="lecture in lectures">
-<md-item-content>
-{{lecture.name}} by {{lecture.professor}} at {{lecture.university}} <a ng-href="#/lecture/id-{{lecture.id}}"> Link</a>
-</md-item-content>
-</md-item>
-</md-list>
+<div id="lectureTable" class="table-responsive-vertical md-whiteframe-z2" layout="column" layout-align="center center">
+	<table class="table table-hover table-mc-light-blue">
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>Name</th>
+				<th>Professor</th>
+				<th>University</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-click="route('new')" class="newLectureRow">
+				<td colspan="4"data-title="Add"><strong>+</strong><md-tooltip>Create a new Lecture</md-tooltip></td>
+			</tr>
+			<tr ng-repeat="lecture in lectures" ng-click="route('id-' + lecture.id)">
+				<td data-title="ID">{{lecture.id}}</td>
+				<td data-title="Name">{{lecture.name}}</td>
+				<td data-title="Professor">{{lecture.professor}}</td>
+				<td data-title="Univeristy">{{lecture.university}}</td>
+			</tr>
+			<tr ng-click="route('new')" class="newLectureRow">
+				<td colspan="4"data-title="Add"><strong>+</strong><md-tooltip>Create a new Lecture</md-tooltip></td>
+			</tr>
+		</tbody>
+	</table>
+</div>

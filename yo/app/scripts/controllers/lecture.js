@@ -9,11 +9,14 @@
 * Controls Tab Navigation Bar Highlighting
 */
 angular.module('graphOfContentApp')
-.controller('AllLecturesCtrl', function($scope, Lecture, site){
+.controller('AllLecturesCtrl', function($scope, Lecture, site, $location){
 	Lecture.query(function(data) {
 		$scope.lectures = data;
 	});
 	site.updateSite('Your Lectures', 'All Lectures');
+	$scope.route = function(id){
+		$location.path('/lecture/' + id);
+	};
 
 })
 .controller('LectureCtrl', function($scope, $routeParams, Lecture, site){

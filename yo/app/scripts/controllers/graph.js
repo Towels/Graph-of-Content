@@ -10,9 +10,12 @@
  */
 
 angular.module('graphOfContentApp')
-.controller('GraphCtrl', function($scope, $http, graphURL, graphRenderer){
-	$http.get(graphURL+'/get/1').then(function(response) {
-		graphRenderer.setGraphData(response.data);
+.controller('GraphCtrl', function($scope, Graph, graphRenderer, $routeParams){
+	Graph.get({id: $routeParams.id}, function(data) {
+		graphRenderer.setGraphData(data);
 	});
 	
+})
+.factory('Graph', function($resource, graphURL) {
+	return $resource(graphURL + '/:id');
 });

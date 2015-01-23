@@ -21,9 +21,9 @@ import com.towels.graphofcontent.business.LectureService;
 import com.towels.graphofcontent.dao.LectureDAO;
 import com.towels.graphofcontent.data.Lecture;
 import com.towels.graphofcontent.dto.LectureDTO;
+import com.towels.graphofcontent.util.UserAuthorization;
 
 @Stateless
-@ApplicationPath("/resources")
 @Path("lecture")
 
 public class LectureResource extends Application {
@@ -36,6 +36,7 @@ public class LectureResource extends Application {
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
+	@UserAuthorization
 	public List<LectureDTO> getLectures(){
 		List<Lecture> lectures = dao.findPublicLectures();
 		List<LectureDTO> daos = new ArrayList<LectureDTO>();
@@ -47,6 +48,7 @@ public class LectureResource extends Application {
 	
 	@GET
     @Path("{id}")
+	@UserAuthorization
 	@Produces(MediaType.APPLICATION_JSON)
     public LectureDTO getLecture(@PathParam("id") Long id) {
         Lecture lecture = dao.findLectureById(id);
@@ -56,6 +58,7 @@ public class LectureResource extends Application {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
+	@UserAuthorization
 	public LectureDTO storeNewLecture(LectureDTO lecture){
 		return new LectureDTO(dao.store(new Lecture(lecture)));
 	}
@@ -63,6 +66,7 @@ public class LectureResource extends Application {
 	@PUT
 	@Path("{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
+	@UserAuthorization
 	public void updateLecture(LectureDTO lecture, @PathParam("id") Long id){
 		lecture.id = id;
 		srv.mergeChanges(lecture);
@@ -70,6 +74,7 @@ public class LectureResource extends Application {
 	
 	@DELETE
     @Path("{id}")
+	@UserAuthorization
     public void removeLecture(@PathParam("id") Long id) {
         Lecture lecture = dao.findLectureById(id);
         dao.delete(lecture);

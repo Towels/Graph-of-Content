@@ -1,6 +1,7 @@
 package com.towels.graphofcontent.data;
 
 import java.sql.Timestamp;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -24,7 +25,9 @@ import com.towels.graphofcontent.util.VisibilityType;
 @Table(name="Lecture")
 public class Lecture {
 
-	public Lecture(){}
+	public Lecture(){
+		this.moderators = new HashSet<User>();
+	}
 	public Lecture(LectureDTO dto){
 		this.id = dto.id;
 		this.name = dto.name;

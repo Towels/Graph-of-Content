@@ -9,22 +9,30 @@ angular.module('graphOfContentApp')
 	    colorComment ='#FF4000', //orange
 	    colorText = '#151515'; // dark grey
 	var renderer = {};
-	var s = undefined;
+	var s;
 renderer.setGraphData = function(data){
-	s = new sigma({
-		graph: data,
-	    container: 'graph-container',
-	    renderer: {
-	        container: document.getElementById('graph-container'),
-	        type: 'canvas'
-	    },
-	    settings: {
-	        sideMargin: 0.5,
-	        drawLabels: false,
-	        enableHovering: false
-	    }
-	});
-}
+	if(s == undefined){
+		
+	
+		s = new sigma({
+			graph: data,
+		    container: 'graph-container',
+		    renderer: {
+		        container: document.getElementById('graph-container'),
+		        type: 'canvas'
+		    },
+		    settings: {
+		        sideMargin: 0.5,
+		        drawLabels: false,
+		        enableHovering: false
+		    }
+		});
+	}
+};
+renderer.addNode = function(node){
+	s.graph.addNode(node);
+	s.refresh();
+};
 renderer.drawEllipse = function(context, color, posX, posY, size, scaleX, scaleY) {
     context.fillStyle = color;
     context.beginPath();
@@ -42,22 +50,22 @@ renderer.drawEllipse = function(context, color, posX, posY, size, scaleX, scaleY
     context.fill();
     context.restore();
     context.closePath();
-}
+};
 
 renderer.drawFont = function(context, size, label, posX, posY) {
     context.beginPath();
     context.fillStyle = colorText;
-    context.font = "bold " + size +"px Arial";
+    context.font = 'bold ' + size +'px Arial';
     context.fillText(label, posX, posY);
 
     context.closePath();
-}
+};
 
 //node chapter renderer
 sigma.canvas.nodes.CHAPTER = function(node, context, settings) {
     var prefix = settings('prefix') || '',
         size = node[prefix + 'size']*2,
-        label = node['label'],
+        label = node.label,
         scaleX = 3,
         scaleY = 1,
         posX = (node[prefix+'x'])/scaleX,
@@ -79,7 +87,7 @@ sigma.canvas.nodes.CHAPTER = function(node, context, settings) {
 sigma.canvas.nodes.topic = function(node, context, settings) {
     var prefix = settings('prefix') || '',
         size = node[prefix + 'size']*1,
-        label = node['label'],
+        label = node.label,
         scaleX = 3,
         scaleY = 1,
         posX = (node[prefix+'x'])/scaleX,
@@ -90,7 +98,7 @@ sigma.canvas.nodes.topic = function(node, context, settings) {
 
 
 
-    renderer.drawEllipse(context,colorTopic,posX,posY,size,scaleX,scaleY)
+    renderer.drawEllipse(context,colorTopic,posX,posY,size,scaleX,scaleY);
     renderer.drawFont(context, fontSize, label, posX2, posY2);
 
 
@@ -100,7 +108,7 @@ sigma.canvas.nodes.topic = function(node, context, settings) {
 sigma.canvas.nodes.comment = function(node, context, settings) {
     var prefix = settings('prefix') || '',
         size = node[prefix + 'size'],
-        label = node['label'],
+        label = node.label,
         posX = (node[prefix+'x'])-size,
         posY = (node[prefix+'y']);
 

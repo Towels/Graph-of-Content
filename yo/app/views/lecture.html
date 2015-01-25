@@ -1,5 +1,14 @@
-{{lecture.name}} by {{lecture.professor}} at {{lecture.university}}
-
+<md-content class="mainContent md-whiteframe-z2">
+<md-content class="md-padding lectureHeader" layout="column" layout-align="center center">
+<h1>{{lecture.name}}</h1> <h2> by {{lecture.professor}} at {{lecture.university}}</h2>
+</md-content>
+<md-button ng-click="route('edit')">Edit</md-button> <!--ng-show="user.isOwner()"-->
+<md-divider></md-divider>
 <div id="container" ng-controller="GraphCtrl">
-<div id="graph-container" style="width: 100px; height: 100px"></div>
+<div id="graph-container"></div>
+<md-divider></md-divider>
+<md-button class="md-accent" ng-click="centerGraph()">Recenter</md-button>
+<md-button class="md-accent" ng-click="route('graph')">Maximize</md-button>
+<md-button class="md-warn md-hue-1" ng-show="user.isOwner()" ng-click="route('edit')">Edit</md-button>
 </div>
+</md-content>

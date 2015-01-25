@@ -5,18 +5,17 @@ angular.module('graphOfContentApp')
     var fancy = function (someString){
     	if(someString.indexOf('>') >= 0){
     		var s1 = someString.substring(0, someString.indexOf('>'));
-    		var s2 = someString.substring(someString.indexOf('>')+1, someString.length);
+    		var s2 = fancy(someString.substring(someString.indexOf('>')+1, someString.length));
     		someString = s1 + '<i class="fa fa-angle-right"></i>' + s2;
     	}
     	return someString;
     };
     var site = {
         title: '',
-        desc: ''
+        button: ''
     };
-    site.updateSite = function (title, desc) {
+    site.updateSite = function (title) {
         site.title = fancy(title);
-        site.desc = desc; //TODO unused
         $window.document.title = title;
     };
     return site;
@@ -40,9 +39,9 @@ angular.module('graphOfContentApp')
     };
     return auth;
 })
-.constant('rootURL', 'http://localhost:8080/angular/resources')
-.constant('authURL', 'http://localhost:8080/angular/resources/auth')
-.constant('graphURL', 'http://localhost:8080/angular/resources/goc')
-.constant('userURL', 'http://localhost:8080/angular/resources/user')
-.constant('fileURL', 'http://localhost:8080/angular/resources/file')
-.constant('lectureURL', 'http://localhost:8080/angular/resources/lecture');
+.constant('rootURL', 'http://192.168.178.41/resources')
+.constant('authURL', 'http://192.168.178.41/resources/auth')
+.constant('graphURL', 'http://192.168.178.41/resources/goc')
+.constant('userURL', 'http://192.168.178.41/resources/user')
+.constant('fileURL', 'http://192.168.178.41/resources/file')
+.constant('lectureURL', 'http://192.168.178.41/resources/lecture');

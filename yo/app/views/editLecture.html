@@ -2,26 +2,26 @@
 	<form class="createLecture" name="lectureForm">
 		<md-input-container>
 			<label>Lecture Name</label>
-			<input md-maxlength="255" required name="name" ng-model="name">
+			<input md-maxlength="255" required name="name" ng-model="lecture.name">
 			<div ng-messages="lectureForm.name.$error">
 				<div ng-message="required">This is required.</div>
 			</div>
 		</md-input-container>
 		<md-input-container>
 			<label>Professor Name</label>
-			<input md-maxlength="255" required name="professor" ng-model="professor">
+			<input md-maxlength="255" required name="professor" ng-model="lecture.professor">
 			<div ng-messages="lectureForm.professor.$error">
 				<div ng-message="required">This is required.</div>
 			</div>
 		</md-input-container>
 		<md-input-container>
 			<label>University Name</label>
-			<input md-maxlength="255" required name="university" ng-model="university">
+			<input md-maxlength="255" required name="university" ng-model="lecture.university">
 			<div ng-messages="lectureForm.university.$error">
 				<div ng-message="required">This is required</div>
 			</div>
 		</md-input-container>
-		<md-radio-group ng-model="visibility">
+		<md-radio-group ng-model="lecture.visibility">
 			<md-radio-button value="PUBLIC">Public</md-radio-button>
 			<md-radio-button value="PRIVATE">Private</md-radio-button>
 		</md-radio-group>

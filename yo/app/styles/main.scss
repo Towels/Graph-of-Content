@@ -18,8 +18,12 @@ md-whiteframe {
 }
 
 .mainContent{
-	max-width: 90%;
+	max-width: 95%;
 	margin: 20px auto;
+}
+
+.createLecture{
+	width: 90%;
 }
 
 .profileCard{
@@ -29,6 +33,10 @@ md-whiteframe {
 .mainView{
 	background-color: rgba(10,10,10,0.1) !important;
 	width: 100%;
+}
+
+.lectureHeader{
+	background-color: rgba(29,143,19,0.2) !important;
 }
 
 .spacer{

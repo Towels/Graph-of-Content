@@ -10,5 +10,5 @@
 angular.module('graphOfContentApp')
   .controller('MainCtrl', function ($scope, site) {
     $scope.site = site;
-   	$scope.site.updateSite('Welcome', 'Welcome to the Graph of Content.');
+   	$scope.site.updateSite('Welcome');
   });

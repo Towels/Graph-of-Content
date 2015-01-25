@@ -33,10 +33,12 @@ public class DirectedEdge implements Serializable {
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="source")
+	@NotNull
 	private Node source;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="target")
+	@NotNull
 	private Node target;
 
 	public DirectedEdge() {

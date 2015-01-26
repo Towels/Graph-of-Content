@@ -1,8 +1,7 @@
 package com.towels.graphofcontent.data;
 
-import java.io.Serializable;
-import java.sql.Blob;
-import java.sql.Date;
+import java.sql.Timestamp;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -13,14 +12,29 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.towels.graphofcontent.dto.FileObjectDTO;
 import com.towels.graphofcontent.util.FileType;
 
 @Entity
 @Table(name="FileObject")
-public class FileObject implements Serializable{
-
-	private static final long serialVersionUID = -8005122898584153837L;
+public class FileObject{
 	
+	public FileObject(){}
+	public FileObject(FileObjectDTO dto){
+		this.id = dto.id;
+		this.title = dto.title;
+		this.description = dto.description;
+		this.dateCreated = dto.dateCreated;
+		this.dateLastModified = dto.dateLastModified;
+		try{
+			this.fileType = FileType.valueOf(dto.fileType);
+		}
+		catch(NullPointerException e){
+			this.fileType = null;
+		}
+		//TODO owner
+		if(this.dateCreated == null) this.dateCreated = new Timestamp(System.currentTimeMillis());
+	}
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -28,12 +42,10 @@ public class FileObject implements Serializable{
 	private String title;
 	@Column(name="description")
 	private String description;
-	@Column(name="file")
-	private Blob file;
 	@Column(name="dateCreated")
-	private Date dateCreated;
+	private Timestamp dateCreated;
 	@Column(name="dateLastModified")
-	private Date dateLastModified;
+	private Timestamp dateLastModified;
 	@Column(name="fileType")
 	@Enumerated(EnumType.STRING)
 	private FileType fileType;
@@ -61,38 +73,24 @@ public class FileObject implements Serializable{
 		return this.description;
 	}
 	
-	public boolean setDescription(String description){
-		if(true){
-			this.description = description;
-			this.dateLastModified = new Date(System.currentTimeMillis());
-			return true;
-		}
-		else return false;
+	public void setDescription(String description){
+		this.description = description;
+		this.dateLastModified = new Timestamp(System.currentTimeMillis());
 	}
 	
-	public Blob getFile(){
-		return this.file;
-	}
-
-	public void setFile(Blob file){
-		this.file = file;
-	}
-	
-
-	
-	public Date getDateCreated(){
+	public Timestamp getDateCreated(){
 		return this.dateCreated;
 	}
 	
-	public void setDateCreated(Date date) {
+	public void setDateCreated(Timestamp date) {
 		this.dateCreated = date;
 	}
 	
-	public Date getDateLastModified(){
+	public Timestamp getDateLastModified(){
 		return this.dateLastModified;
 	}
 	
-	public void setDateLastModified(Date date) {
+	public void setDateLastModified(Timestamp date) {
 		this.dateLastModified = date;
 	}
 	
@@ -111,6 +109,4 @@ public class FileObject implements Serializable{
 	public void setOwner(User owner){
 		this.owner = owner;
 	}
-	
-	
 }

@@ -1,5 +1,7 @@
 package com.towels.graphofcontent.dao;
 
+import java.util.List;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -7,13 +9,15 @@ import javax.persistence.PersistenceContext;
 import com.towels.graphofcontent.data.FileObject;
 
 @Stateless
-public class FileDAO {
+public class FileObjectDAO {
 	@PersistenceContext
 	private EntityManager em;
 	
 	//Create new User
-	public void store(FileObject file) {
+	public FileObject store(FileObject file) {
 		em.persist(file);
+		em.flush();
+		return file;
 	}
 	
 	//Merge the user Object to the one with the same ID;
@@ -33,5 +37,14 @@ public class FileDAO {
 						"SELECT file FROM FileObject file WHERE file.id = :id")
 				.setParameter("id", id)
 				.getSingleResult();
+	}
+	
+	public List<FileObject> getAllFiles(){
+		return em.createQuery("SELECT file FROM FileObject file").getResultList();
+	}
+	
+	public int removeReferencesInNodes(FileObject file){
+		return em.createQuery("UPDATE Node SET file = NULL WHERE file.id = :fid")
+		.setParameter("fid", file.getId()).executeUpdate();
 	}
 }

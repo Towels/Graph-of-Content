@@ -1,0 +1,31 @@
+<div id="lectureTable"
+	class="table-responsive-vertical md-whiteframe-z2" layout="column"
+	layout-align="center center">
+	<table class="table table-hover table-mc-light-blue">
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>Title</th>
+				<th>Description</th>
+				<th>File Type</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-click="route('new')" class="newLectureRow">
+				<td colspan="4" data-title="Add"><strong>+</strong>
+				<md-tooltip>Upload a new File</md-tooltip></td>
+			</tr>
+			<tr ng-repeat="file in files"
+				ng-click="route('id-' + file.id)">
+				<td data-title="ID">{{file.id}}</td>
+				<td data-title="Title">{{file.title}}</td>
+				<td data-title="Description">{{file.description}}</td>
+				<td data-title="File Type">{{file.fileType}}</td>
+			</tr>
+			<tr ng-click="route('new')" class="newLectureRow">
+				<td colspan="4" data-title="Add"><strong>+</strong>
+				<md-tooltip>Upload a new File</md-tooltip></td>
+			</tr>
+		</tbody>
+	</table>
+</div>

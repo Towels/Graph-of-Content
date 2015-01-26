@@ -9,9 +9,9 @@ INSERT INTO Lecture VALUES (2, NOW(), NOW(), "Do not forget to bring your Towel"
 INSERT INTO Lecture VALUES (3, NOW(), NOW(), "Washing Stuff", "Grandma Towels", "Home for the Elderly", "PUBLIC", 1, 1);
 
 
-INSERT INTO FileObject VALUES (1, NOW(), NOW(), "File 1", NULL, "BIN", "F1", 1);
-INSERT INTO FileObject VALUES (2, NOW(), NOW(), "File 1", NULL, "BIN", "F1", 1);
-INSERT INTO FileObject VALUES (3, NOW(), NOW(), "File 1", NULL, "BIN", "F1", 1);
+INSERT INTO FileObject VALUES (1, NOW(), NOW(), "A picture of a towel", "JPG", "Towel", 1);
+INSERT INTO FileObject VALUES (2, NOW(), NOW(), "Some WebTech slides", "PDF", "Webtech Slides", 1);
+INSERT INTO FileObject VALUES (3, NOW(), NOW(), "Last assignment", "ZIP", "Assignment X", 2);
 
 INSERT INTO Node VALUES (1, "CHAPTER", "Chapter 1", 1,1, 1);
 INSERT INTO Node VALUES (2, "CHAPTER", "Chapter 2", 1,2, 2);

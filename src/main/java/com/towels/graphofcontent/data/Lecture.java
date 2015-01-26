@@ -46,8 +46,9 @@ public class Lecture implements Serializable{
 		}
 		this.dateCreated = dto.dateCreated;
 		this.lastModified = dto.lastModified;
-		
+		//TODO owner
 		if(this.dateCreated == null) this.dateCreated = new Timestamp(System.currentTimeMillis());
+		if(this.graph == null) this.graph = new GraphOfContent();
 	}
 	
 	@Id

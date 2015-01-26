@@ -1,5 +1,5 @@
 package com.towels.graphofcontent.util;
 
 public enum FileType {
-	BIN, PDF, PIC, HTML
+	ZIP, PDF, JPG, PNG, HTML
 }

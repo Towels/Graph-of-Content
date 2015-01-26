@@ -24,7 +24,32 @@ angular.module('graphOfContentApp')
 			$location.path('/file/' + id);
 	  };
   })
-  .controller('UploadFileCtrl', function(){
+  .controller('UploadFileCtrl', function($scope, fileURL, File, $upload){
+	  $scope.submit = function(){
+		  var details = new File({
+			  title: $scope.title,
+			  description: $scope.description,
+			  fileType: $scope.fileType
+		  });
+		  console.log($scope.file);
+		  details.$save(function(response){
+			  console.log(response.id);
+			  var fileReader = new FileReader();
+    fileReader.readAsArrayBuffer($scope.file[0]);
+    fileReader.onload = function(e) {
+        $upload.http({
+            url: fileURL + '/' + response.id,
+            headers: {'Content-Type': 'application/octet-stream'},
+            data: e.target.result
+        }).then(function(response) {
+            //success;
+        }, null, function(evt) {
+            $scope.progress[index] = parseInt(100.0 * evt.loaded / evt.total);
+        });
+    };
+
+		  });
+	  };
 	  
   })
   .controller('EditFileCtrl', function(){

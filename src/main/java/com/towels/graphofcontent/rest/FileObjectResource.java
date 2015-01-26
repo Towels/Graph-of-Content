@@ -30,6 +30,7 @@ import org.apache.commons.io.IOUtils;
 import com.towels.graphofcontent.dao.FileObjectDAO;
 import com.towels.graphofcontent.data.FileObject;
 import com.towels.graphofcontent.dto.FileObjectDTO;
+import com.towels.graphofcontent.util.UserAuthorization;
 
 @Stateless
 @Path("file")
@@ -46,6 +47,7 @@ public class FileObjectResource extends Application {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
+	@UserAuthorization
 	public FileObjectDTO uploadStream(FileObjectDTO dto){
 	    FileObject fileobj = new FileObject(dto);
 	    return new FileObjectDTO( dao.store(fileobj));
@@ -53,6 +55,7 @@ public class FileObjectResource extends Application {
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
+	@UserAuthorization
 	public List<FileObjectDTO> getAllFiles(){
 		List<FileObjectDTO> res = new ArrayList<FileObjectDTO>();
 		for(FileObject file: dao.getAllFiles()){
@@ -64,6 +67,7 @@ public class FileObjectResource extends Application {
 	@GET
 	@Path("{id}/details")
 	@Produces(MediaType.APPLICATION_JSON)
+	@UserAuthorization
 	public FileObjectDTO getFile(@PathParam("id") Long id){
 		return new FileObjectDTO(dao.findFileById(id));
 	}
@@ -72,6 +76,7 @@ public class FileObjectResource extends Application {
 	@PUT
 	@Path("{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
+	@UserAuthorization
 	public void updateFileObjectInformation(@PathParam("id") Long id, FileObjectDTO dto){
 		dao.update(new FileObject(dto));
 	}
@@ -79,6 +84,7 @@ public class FileObjectResource extends Application {
 	@DELETE
 	@Path("{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
+	@UserAuthorization
 	public void deleteFileObject(@PathParam("id") Long id){
 		FileObject file = dao.findFileById(id);
 		dao.removeReferencesInNodes(file);
@@ -88,6 +94,7 @@ public class FileObjectResource extends Application {
 	@GET
 	@Path("{id}")
 	@Produces(MediaType.APPLICATION_OCTET_STREAM)
+	@UserAuthorization
 	public Response downloadFile(@PathParam("id") Long id) throws IOException{
 		FileObject file= dao.findFileById(id);
 		return Response.ok(new File(basePath + "/" + id.toString()))
@@ -98,8 +105,8 @@ public class FileObjectResource extends Application {
 	@POST
 	@Path("{id}")
 	@Consumes(MediaType.APPLICATION_OCTET_STREAM)
-	public void uploadStream(@PathParam("id") Long id, InputStream payload ) throws IOException
-	{
+	@UserAuthorization
+	public void uploadStream(@PathParam("id") Long id, InputStream payload ) throws IOException{
 	    OutputStream os = new FileOutputStream(basePath + "/" + id.toString());
 	    IOUtils.copy(payload,os);
 	}

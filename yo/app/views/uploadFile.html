@@ -1,0 +1,22 @@
+<md-content class="mainContent md-padding md-whiteframe-z2" layout="column" layout-align="center center">
+	<form class="uploadFile" name="fileForm">
+		<md-input-container>
+			<label>Title</label>
+			<input md-maxlength="255" required name="title" ng-model="title">
+			<div ng-messages="fileForm.title.$error">
+				<div ng-message="required">This is required.</div>
+			</div>
+		</md-input-container>
+		<md-input-container>
+			<label>Description</label>
+			<input md-maxlength="255" name="description" ng-model="description">
+		</md-input-container>
+		<md-radio-group ng-model="fileType">
+			<md-radio-button value="PDF">PDF</md-radio-button>
+			<md-radio-button value="PNG">PNG</md-radio-button>
+			<md-radio-button value="JPG">JPG</md-radio-button>
+		</md-radio-group>
+		<md-button class="md-warn" ng-file-select ng-model="file">Select File</md-button>
+		<md-button class="md-primary" ng-click="submit()">Upload</md-button>
+	</form>
+</md-content>

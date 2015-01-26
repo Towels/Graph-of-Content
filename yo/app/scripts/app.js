@@ -18,7 +18,8 @@ angular
     'ngSanitize',
     'ngTouch',
     'ngMaterial',
-    'angular-md5'
+    'angular-md5',
+    'angularFileUpload'
   ])
   .config(function ($routeProvider, $locationProvider, $httpProvider) {
     $routeProvider

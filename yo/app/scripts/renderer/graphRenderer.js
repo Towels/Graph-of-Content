@@ -10,28 +10,30 @@ angular.module('graphOfContentApp')
 	    colorText = '#151515'; // dark grey
 	var renderer = {};
 	var s;
-renderer.setGraphData = function(data){
-	if(s == undefined){
-		
+	var clickNode = function() {};
 	
-		s = new sigma({
-			graph: data,
-		    container: 'graph-container',
-		    renderer: {
-		        container: document.getElementById('graph-container'),
-		        type: 'canvas'
-		    },
-		    settings: {
-		        sideMargin: 0.5,
-		        drawLabels: false,
-		        enableHovering: false
-		    }
-		});
-	}
+renderer.setClickNode = function(f){
+		clickNode = f;
 };
-renderer.addNode = function(node){
-	s.graph.addNode(node);
-	s.refresh();
+	
+renderer.setGraphData = function(data){
+	if(s != undefined){
+		s.kill();
+	}
+	s = new sigma({
+		graph: data,
+	    container: 'graph-container',
+	    renderer: {
+	        container: document.getElementById('graph-container'),
+	        type: 'canvas'
+	    },
+	    settings: {
+	        sideMargin: 0.5,
+	        drawLabels: false,
+	        enableHovering: true
+	    }
+	});
+	s.bind('clickNode', clickNode);
 };
 renderer.drawEllipse = function(context, color, posX, posY, size, scaleX, scaleY) {
     context.fillStyle = color;

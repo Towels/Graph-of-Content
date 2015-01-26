@@ -1,21 +1,24 @@
-<form><div id="container">
+<md-content class="mainContent md-whiteframe-z2">
 <style>
 #graph-container {
-top: 0;
-bottom: 0;
-left: 0;
-right: 0;
-position: absolute;
+width: 100%;
+height: 500px;
+margin:auto;
 }
 </style>
-<div id="graph-container"></div>
-</div>
-</form>
-<form>
-	<md-text-float label="nodeLabel" ng-model="nodeLabel" placeholder="Label"></md-text-float>
-	<md-text-float label="nodeXPos" ng-model="nodeXPos" placeholder="X Position"></md-text-float>
-	<md-text-float label="nodeYPos" ng-model="nodeYPos" placeholder="Y Position"></md-text-float>
-	<md-text-float label="nodeType" ng-model="nodeType" placeholder="Type"></md-text-float>
+<form ng-show="editMode">
+<md-content class="md-padding" layout="row" layout-align="space-between start">
+<md-text-float label="Label" ng-model="nodeLabel" ></md-text-float>
+	<md-text-float label="X Position" ng-model="nodeXPos" ></md-text-float>
+	<md-text-float label="Y Position" ng-model="nodeYPos" ></md-text-float>
+	<md-text-float label="Type" ng-model="nodeType" ></md-text-float>
 	<md-button ng-click="addNode()">Add Node</md-button>
-	<md-content>{{nodeTransfer}}</md-content>
+</md-content>
+<md-content class="md-padding" layout="row" layout-align="space-between start">
+	<md-text-float label="Source" ng-model="source" ></md-text-float>
+	<md-text-float label="Target" ng-model="target" ></md-text-float>
+	<md-button ng-click="addEdge()">Add Edge</md-button>
+</md-content>
 </form>
+	<div id="graph-container"></div>
+</md-content>

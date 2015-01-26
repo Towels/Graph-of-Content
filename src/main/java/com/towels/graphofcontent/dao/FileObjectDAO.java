@@ -39,6 +39,15 @@ public class FileObjectDAO {
 				.getSingleResult();
 	}
 	
+	//User Defined Query
+	public FileObject findFileByNodeId(Long id) {
+		return (FileObject) em
+				.createQuery(
+						"SELECT node.file FROM Node node WHERE node.id = :id")
+				.setParameter("id", id)
+				.getSingleResult();
+	}
+	
 	public List<FileObject> getAllFiles(){
 		return em.createQuery("SELECT file FROM FileObject file").getResultList();
 	}

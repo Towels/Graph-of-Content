@@ -21,7 +21,7 @@ angular
     'angular-md5',
     'angularFileUpload'
   ])
-  .config(function ($routeProvider, $locationProvider, $httpProvider) {
+  .config(function ($routeProvider, $locationProvider, $httpProvider, $sceProvider) {
     $routeProvider
       .when('/', {
         templateUrl: 'views/main.html',
@@ -79,4 +79,5 @@ angular
         redirectTo: '/404.html'
       });
     $httpProvider.interceptors.push('sessionTimeOutHttpInterceptor');
+    $sceProvider.enabled(false);
   });

@@ -110,4 +110,16 @@ public class FileObjectResource extends Application {
 	    OutputStream os = new FileOutputStream(basePath + "/" + id.toString());
 	    IOUtils.copy(payload,os);
 	}
+	
+	@GET
+	@Path("node/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response downloadFileByNodeID(@PathParam("id") Long nodeId) throws IOException{
+		FileObject file = dao.findFileByNodeId(nodeId);
+		if(file!= null){
+			return Response.ok(new FileObjectDTO(file)).build();
+		}else {
+				return Response.noContent().build();
+		}
+	}
 }

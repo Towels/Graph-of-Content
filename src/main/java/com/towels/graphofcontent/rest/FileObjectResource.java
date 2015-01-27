@@ -1,7 +1,6 @@
 package com.towels.graphofcontent.rest;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -62,23 +61,6 @@ public class FileObjectResource extends Application {
 			res.add(new FileObjectDTO(file));
 		}
 		return res;
-	}
-	
-	@GET
-	@Path("{id}/details")
-	@Produces(MediaType.APPLICATION_JSON)
-	@UserAuthorization
-	public FileObjectDTO getFile(@PathParam("id") Long id){
-		return new FileObjectDTO(dao.findFileById(id));
-	}
-	
-	
-	@PUT
-	@Path("{id}")
-	@Consumes(MediaType.APPLICATION_JSON)
-	@UserAuthorization
-	public void updateFileObjectInformation(@PathParam("id") Long id, FileObjectDTO dto){
-		dao.update(new FileObject(dto));
 	}
 	
 	@DELETE

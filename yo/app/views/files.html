@@ -15,8 +15,7 @@
 				<td colspan="4" data-title="Add"><strong>+</strong>
 				<md-tooltip>Upload a new File</md-tooltip></td>
 			</tr>
-			<tr ng-repeat="file in files"
-				ng-click="route('id-' + file.id)">
+			<tr ng-repeat="file in files">
 				<td data-title="ID">{{file.id}}</td>
 				<td data-title="Title">{{file.title}}</td>
 				<td data-title="Description">{{file.description}}</td>

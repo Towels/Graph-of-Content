@@ -59,14 +59,6 @@ angular
     	templateUrl: 'views/uploadFile.html',
     	controller: 'UploadFileCtrl'
       })
-      .when('/file/id-:id', {
-    	templateUrl: 'views/file.html',
-    	controller: 'FileCtrl'
-      })
-      .when('/file/id-:id/edit', {
-    	templateUrl: 'views/editFile.html',
-    	controller: 'EditFileCtrl'
-      })
       .when('/graph', {
         templateUrl: 'views/graph.html',
         controller: 'GraphCtrl'

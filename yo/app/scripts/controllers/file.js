@@ -9,12 +9,6 @@
  * Controls Tab Navigation Bar Highlighting
  */
 angular.module('graphOfContentApp')
-  .controller('FileCtrl', function($scope, File, site, $routeParams){
-	  File.get({id: $routeParams.id}, function(data) {
-			$scope.file = data;
-			site.updateSite('File > ' + $scope.file.title);
-	  });
-  })
   .controller('AllFilesCtrl', function($scope, File, site, $location){
 	  File.query(function(data){
 		  $scope.files = data;
@@ -24,7 +18,8 @@ angular.module('graphOfContentApp')
 			$location.path('/file/' + id);
 	  };
   })
-  .controller('UploadFileCtrl', function($scope, fileURL, File, $upload){
+  .controller('UploadFileCtrl', function($scope, fileURL, File, $upload, site){
+	  site.updateSite('File > Upload');
 	  $scope.submit = function(){
 		  var details = new File({
 			  title: $scope.title,
@@ -50,9 +45,6 @@ angular.module('graphOfContentApp')
 
 		  });
 	  };
-	  
-  })
-  .controller('EditFileCtrl', function(){
 	  
   })
 .factory('File', function($resource, fileURL) {
